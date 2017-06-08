@@ -1,7 +1,8 @@
 <?php
 
+namespace Mineur\InstagramApi;
 
-class InstagramApi
+class Instagram
 {
     const BASE_ENDPOINT = 'https://api.instagram.com/v1/';
 }

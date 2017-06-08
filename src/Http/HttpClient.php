@@ -6,6 +6,6 @@ interface HttpClient
 {
     public function get(
         string $endpoint,
-        array $query = null
+        array $options = []
     );
 }

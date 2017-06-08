@@ -2,10 +2,10 @@
 
 namespace Mineur\InstagramApi;
 
-use InstagramApi;
+use Mineur\InstagramApi\Instagram;
 use Mineur\InstagramApi\Http\HttpClient;
 
-class TagsApi extends InstagramApi
+class Tags extends Instagram
 {
     private $httpClient;
     

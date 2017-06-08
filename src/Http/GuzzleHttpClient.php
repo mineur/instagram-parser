@@ -3,42 +3,52 @@
 namespace Mineur\InstagramApi\Http;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Subscriber\Instagram\ImplicitAuth;
 
 class GuzzleHttpClient implements HttpClient
 {
-    const OAUTH_ACCESS_URI = 'https://api.instagram.com/oauth/access_token';
+    const REDIRECT_URL = 'http://localhost:3000';
     
-    private $client;
+    private $accessToken;
     
     public function __construct(
+        string $username,
+        string $password,
         string $clientId,
-        string $clientSecret,
-        string $grantType
-//        string $code
+        string $scope
     )
     {
-        $this->client = (new Client())->post(self::OAUTH_ACCESS_URI, [
-            'body' => [
-                'client_id'     => $clientId,
-                'client_secret' => $clientSecret,
-                'grant_type'    => $grantType,
-                'redirect_uri'  => 'http://localhost:3000',
-//                'code'          => $code
-            ]
-        ]);
+        $config = [
+            'username'     => $username,
+            'password'     => $password,
+            'client_id'    => $clientId,
+            'redirect_uri' => self::REDIRECT_URL,
+            'scope'        => $scope
+        ];
+        
+        $this->setAccesstoken($config);
+    }
+    
+    private function setAccesstoken($config)
+    {
+        $client = new Client();
+        $implicitAuth = new ImplicitAuth($config);
+        
+        $client->getEmitter()->attach($implicitAuth);
+        $client->post('https://instagram.com/oauth/authorize');
+        
+        $this->accessToken = $implicitAuth->getAccessToken();
     }
     
     public function get(
         string $endpoint,
-        array $query = null
+        array $options = []
     )
     {
-        $response = $this->client->get($endpoint, [
-            'query' => [
-                'access_token' => ''
-            ]
-        ]);
+        $options[] = $this->accessToken;
         
-        return $response->getBody();
+        $response = $this->client->get($endpoint, $options);
+        
+        dump($response->getBody());
     }
 }
