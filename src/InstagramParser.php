@@ -39,25 +39,22 @@ class InstagramParser
         return new self($httpClient, $queryId);
     }
     
-    public function parse()
+    public function parse($tag)
     {
-        $this->ensureHasTagsToParse();
+//        $this->ensureHasTagsToParse();
         
         $itemsForTag = $this->numberOfItems ?? 10;
         
-        foreach ($this->tags as $tag) {
-            $endpoint = sprintf(
-                self::BASE_ENDPOINT . 'query_id=' . $this->queryId . '&tag_name=%s&first=%d',
-                $tag, $itemsForTag
-            );
-            $response = $this->httpClient->get($endpoint);
-            
-            dump($response->getBody());die;
-            
-            $this->returnInstagramPostObject(
-                (string) $response->getBody()
-            );
-        }
+        $endpoint = sprintf(
+            self::BASE_ENDPOINT . 'query_id=' . $this->queryId . '&tag_name=%s&first=%d',
+            $tag, $itemsForTag
+        );
+        $response = $this->httpClient->get($endpoint);
+    
+        return json_decode(
+            (string) $response->getBody(),
+            true
+        );
     }
     
     public function searchFor(array $tags)
