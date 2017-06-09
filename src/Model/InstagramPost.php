@@ -56,7 +56,7 @@ class InstagramPost
      * @param bool      $video
      * @param bool|null $commentsDisabled
      */
-    public function __construct(
+    private function __construct(
         int $id,
         string $comment,
         int $commentsCount,
@@ -83,6 +83,24 @@ class InstagramPost
         $this->ownerId = $ownerId;
         $this->video = $video;
         $this->commentsDisabled = $commentsDisabled;
+    }
+    
+    public function fromArray(array $instagramPost)
+    {
+        return new self(
+            $instagramPost['id'],
+            $instagramPost['comment'],
+            $instagramPost['commentsCount'],
+            $instagramPost['shortCode'],
+            $instagramPost['takenAtTimestamp'],
+            $instagramPost['dimensions'],
+            $instagramPost['likesCount'],
+            $instagramPost['mediaSrc'],
+            $instagramPost['thumbnailSrc'],
+            $instagramPost['ownerId'],
+            $instagramPost['video'],
+            $instagramPost['commentsDisabled']
+        );
     }
     
     /** @return int */

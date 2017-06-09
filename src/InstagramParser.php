@@ -12,6 +12,16 @@ class InstagramParser
     
     private $queryId;
     
+    private $tags;
+    
+    private $numberOfItems;
+    
+    /**
+     * InstagramParser constructor.
+     *
+     * @param HttpClient $httpClient
+     * @param string     $queryId
+     */
     private function __construct(
         HttpClient $httpClient,
         string $queryId
@@ -29,21 +39,58 @@ class InstagramParser
         return new self($httpClient, $queryId);
     }
     
-    public function getPostsByTagName(
-        string $tagName,
-        int $offset = 10
-    )
+    public function parse()
     {
-        $endpoint = sprintf(
-            self::BASE_ENDPOINT . 'query_id=' . $this->queryId . '&tag_name=%s&first=%d',
-            $tagName, $offset
-        );
+        $this->ensureHasTagsToParse();
         
-        $response = $this->httpClient->get($endpoint);
+        $itemsForTag = $this->numberOfItems ?? 10;
         
+        foreach ($this->tags as $tag) {
+            $endpoint = sprintf(
+                self::BASE_ENDPOINT . 'query_id=' . $this->queryId . '&tag_name=%s&first=%d',
+                $tag, $itemsForTag
+            );
+            $response = $this->httpClient->get($endpoint);
+            
+            dump($response->getBody());die;
+            
+            $this->returnInstagramPostObject(
+                (string) $response->getBody()
+            );
+        }
+    }
+    
+    public function searchFor(array $tags)
+    {
+        $this->tags = $tags;
+        
+        return $this;
+    }
+    
+    public function numberOfItems(int $items)
+    {
+        $this->numberOfItems = $items;
+        
+        return $this;
+    }
+    
+    private function returnInstagramPostObject(string $post)
+    {
         return json_decode(
-            (string) $response->getBody(),
+            $post,
             true
         );
+    }
+    
+    /**
+     * @throws EmptyTagsException
+     */
+    private function ensureHasTagsToParse()
+    {
+        if (null === $this->tags || count($this->tags) === 0) {
+            throw new EmptyTagsException(
+                'You must parse for at least one tag.'
+            );
+        }
     }
 }
