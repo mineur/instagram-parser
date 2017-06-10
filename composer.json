@@ -22,12 +22,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Mineur\\InstagramApi\\": "src/"
+            "Mineur\\InstagramParser\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Mineur\\InstagramApiTest\\": "test/"
+            "Mineur\\InstagramParserTest\\": "test/"
         }
     },
     "config": {

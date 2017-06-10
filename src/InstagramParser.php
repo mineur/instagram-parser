@@ -1,16 +1,12 @@
 <?php
 
-namespace Mineur\InstagramApi;
+namespace Mineur\InstagramParser;
 
-use Mineur\InstagramApi\Http\HttpClient;
+use Mineur\InstagramParser\Http\HttpClient;
 
 class InstagramParser
 {
-    const BASE_ENDPOINT = 'https://www.instagram.com/graphql/query/?';
-    
     private $httpClient;
-    
-    private $queryId;
     
     private $tags;
     
@@ -20,36 +16,31 @@ class InstagramParser
      * InstagramParser constructor.
      *
      * @param HttpClient $httpClient
-     * @param string     $queryId
      */
-    private function __construct(
-        HttpClient $httpClient,
-        string $queryId
-    )
+    private function __construct(HttpClient $httpClient)
     {
         $this->httpClient = $httpClient;
-        $this->queryId = $queryId;
     }
     
-    public static function open(
-        HttpClient $httpClient,
-        string $queryId
-    ): self
+    public static function open(HttpClient $httpClient): self
     {
-        return new self($httpClient, $queryId);
+        return new self($httpClient);
     }
     
-    public function parse($tag)
+    public function parse()
     {
 //        $this->ensureHasTagsToParse();
         
         $itemsForTag = $this->numberOfItems ?? 10;
         
-        $endpoint = sprintf(
-            self::BASE_ENDPOINT . 'query_id=' . $this->queryId . '&tag_name=%s&first=%d',
-            $tag, $itemsForTag
-        );
-        $response = $this->httpClient->get($endpoint);
+        foreach($this->tags as $tag) {
+            $endpoint = sprintf('&tag_name=%s&first=%d',
+                $tag, $itemsForTag
+            );
+            $response = $this->httpClient->get($endpoint);
+            sleep(5);
+        }
+        
     
         return json_decode(
             (string) $response->getBody(),
@@ -69,14 +60,6 @@ class InstagramParser
         $this->numberOfItems = $items;
         
         return $this;
-    }
-    
-    private function returnInstagramPostObject(string $post)
-    {
-        return json_decode(
-            $post,
-            true
-        );
     }
     
     /**

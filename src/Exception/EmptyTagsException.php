@@ -1,6 +1,6 @@
 <?php
 
-namespace Mineur\InstagramApi;
+namespace Mineur\InstagramParser;
 
 use Exception;
 
