@@ -8,8 +8,10 @@ class GuzzleHttpClient implements HttpClient
 {
     const BASE_ENDPOINT = 'https://www.instagram.com/graphql/query/?';
     
+    /** @var Client */
     private $client;
     
+    /** @var string */
     private $queryId;
     
     /**
@@ -25,12 +27,14 @@ class GuzzleHttpClient implements HttpClient
     
     /**
      * @param string $endpoint
-     * @return \GuzzleHttp\Message\FutureResponse|\GuzzleHttp\Message\ResponseInterface|\GuzzleHttp\Ring\Future\FutureInterface|null
+     * @return string
      */
-    public function get(string $endpoint)
+    public function get(string $endpoint): string
     {
-        return $this->client->get(
+        $clientResponse = $this->client->get(
             self::BASE_ENDPOINT . $this->queryId . $endpoint
         );
+        
+        return $clientResponse->getBody();
     }
 }

@@ -6,15 +6,8 @@ use Mineur\InstagramParser\Http\HttpClient;
 
 class InstagramParser
 {
-    const MAX_ITEMS_TO_SEARCH = 600;
-    
-    const MIN_ITEMS_TO_SEARCH = 10;
-    
+    /** @var HttpClient */
     private $httpClient;
-    
-    private $tags;
-    
-    private $numberOfItems;
     
     /**
      * InstagramParser constructor.
@@ -26,103 +19,100 @@ class InstagramParser
         $this->httpClient = $httpClient;
     }
     
+    /**
+     * Open the Http client
+     *
+     * @param HttpClient $httpClient
+     * @return InstagramParser
+     */
     public static function open(HttpClient $httpClient): self
     {
         return new self($httpClient);
     }
     
-    public function parse()
+    /**
+     * Init execution method
+     *
+     * @param string        $tag
+     * @param callable|null $callback
+     */
+    public function parse(string $tag, callable $callback = null)
     {
         $hasNextPage = true;
-        $itemsForTag = $this->numberOfItems ?? self::MIN_ITEMS_TO_SEARCH;
-        
+        $itemsPerRequest = 10;
+        $this->ensureHasATagToParse($tag);
+    
         while(true === $hasNextPage) {
             $endpoint = sprintf('&tag_name=%s&first=%d&after=%s',
-                $this->tags[0],
-                $itemsForTag,
+                $tag,
+                $itemsPerRequest,
                 $cursor ?? ''
             );
             
             $response    = $this->makeRequest($endpoint);
             $cursor      = $response['page_info']['end_cursor'];
             $hasNextPage = $response['page_info']['has_next_page'];
+    
+            $posts = $response['edges'];
+            foreach($posts as $post) {
+                $this->returnPostObject($post['node'], $callback);
+            }
             
-            $this->parseEachPostsResponse($response);
-            
-            sleep(rand(0, 5)); // avoid DoS
+            sleep(rand(0, 3)); // avoid DoS
         }
     }
     
-    private function makeRequest(string $endpoint)
+    /**
+     * Make the parsing request
+     *
+     * @param string $endpoint
+     * @return array
+     * @throws InstagramException
+     */
+    private function makeRequest(string $endpoint): array
     {
         $response = $this
             ->httpClient
-            ->get($endpoint)
-            ->getBody();
+            ->get($endpoint);
         
         $parsedResponse = json_decode((string) $response, true);
         if ($parsedResponse['status'] !== 'ok') {
-            echo 'an error ocurred'; die;
+            throw new InstagramException(
+                'Unknown Instagram error.'
+            );
         }
         
         return $parsedResponse['data']['hashtag']['edge_hashtag_to_media'];
     }
     
-    private function parseEachPostsResponse(array $response)
+    /**
+     * Return an hydrated InstagramPost object
+     *
+     * @param array         $post
+     * @param callable|null $callback
+     * @return array|mixed
+     */
+    private function returnPostObject(
+        array $post,
+        callable $callback = null
+    )
     {
-        $posts = $response['edges'];
-        
-        foreach($posts as $post) {
-            $this->returnPostObject($post['node']);
+        if ($callback !== null) {
+            return call_user_func($callback, $post);
         }
-    }
     
-    private function returnPostObject(array $post)
-    {
         return $post;
     }
     
-    public function searchFor(array $tags)
-    {
-        $this->ensureHasTagsToParse($tags);
-        $this->tags = $tags;
-        
-        return $this;
-    }
-    
-    public function numberOfItems(int $items)
-    {
-        $this->ensureIsNotSearchingMoreThanMaxNumberOfItems($items);
-        $this->numberOfItems = $items;
-        
-        return $this;
-    }
-    
     /**
-     * @param array $tags
+     * @param string $tag
      * @throws EmptyTagsException
      */
-    private function ensureHasTagsToParse(array $tags)
+    private function ensureHasATagToParse(string $tag)
     {
-        if (null === $tags || count($tags) === 0) {
+        if (empty($tag)) {
             throw new EmptyTagsException(
-                'You must parse for at least one tag.'
-            );
-        }
-    }
-    
-    /**
-     * @param int $items
-     * @throws MaxSearchableResultsException
-     */
-    private function ensureIsNotSearchingMoreThanMaxNumberOfItems(int $items)
-    {
-        if ($items >= self::MAX_ITEMS_TO_SEARCH) {
-            throw new MaxSearchableResultsException(
-                sprintf(
-                    'You cannot search more than %s items at once.',
-                    self::MAX_ITEMS_TO_SEARCH
-                )
+                'You must parse for one tag.'
             );
         }
     }
