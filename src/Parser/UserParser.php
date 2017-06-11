@@ -3,9 +3,13 @@
 namespace Mineur\InstagramParser\Parser;
 
 use Mineur\InstagramParser\Http\HttpClient;
-use Mineur\InstagramParser\InstagramException;
 
-class UserParser extends ParserFactory
+/**
+ * Class UserAbstractParser
+ *
+ * @package Mineur\InstagramParser\Parser
+ */
+class UserAbstractParser extends AbstractParser
 {
     /** @var HttpClient */
     private $httpClient;

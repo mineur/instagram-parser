@@ -6,13 +6,18 @@ use Mineur\InstagramParser\EmptyTagsException;
 use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\InstagramException;
 
-class TagParser extends ParserFactory
+/**
+ * Class TagParser
+ *
+ * @package Mineur\InstagramParser\Parser
+ */
+class TagParser extends AbstractParser
 {
     /** @var HttpClient */
     private $httpClient;
     
     /**
-     * InstagramParser constructor.
+     * Tags Parser constructor.
      *
      * @param HttpClient $httpClient
      */
