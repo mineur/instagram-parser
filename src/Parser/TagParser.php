@@ -1,10 +1,12 @@
 <?php
 
-namespace Mineur\InstagramParser;
+namespace Mineur\InstagramParser\Parser;
 
+use Mineur\InstagramParser\EmptyTagsException;
 use Mineur\InstagramParser\Http\HttpClient;
+use Mineur\InstagramParser\InstagramException;
 
-class InstagramParser
+class TagParser extends ParserFactory
 {
     /** @var HttpClient */
     private $httpClient;
@@ -14,20 +16,9 @@ class InstagramParser
      *
      * @param HttpClient $httpClient
      */
-    private function __construct(HttpClient $httpClient)
+    public function __construct(HttpClient $httpClient)
     {
         $this->httpClient = $httpClient;
-    }
-    
-    /**
-     * Open the Http client
-     *
-     * @param HttpClient $httpClient
-     * @return InstagramParser
-     */
-    public static function open(HttpClient $httpClient): self
-    {
-        return new self($httpClient);
     }
     
     /**
