@@ -43,18 +43,18 @@ class InstagramPost
     /**
      * InstagramPost constructor.
      *
-     * @param int       $id
-     * @param string    $comment
-     * @param int       $commentsCount
-     * @param string    $shortCode
-     * @param string    $takenAtTimestamp
-     * @param array     $dimensions
-     * @param int       $likesCount
-     * @param string    $mediaSrc
-     * @param string    $thumbnailSrc
-     * @param string    $ownerId
-     * @param bool      $video
-     * @param bool|null $commentsDisabled
+     * @param int             $id
+     * @param string          $comment
+     * @param int             $commentsCount
+     * @param string          $shortCode
+     * @param string          $takenAtTimestamp
+     * @param MediaDimensions $dimensions
+     * @param int             $likesCount
+     * @param string          $mediaSrc
+     * @param string          $thumbnailSrc
+     * @param string          $ownerId
+     * @param bool            $video
+     * @param bool|null       $commentsDisabled
      */
     private function __construct(
         int $id,
@@ -62,7 +62,7 @@ class InstagramPost
         int $commentsCount,
         string $shortCode,
         string $takenAtTimestamp,
-        array $dimensions,
+        MediaDimensions $dimensions,
         int $likesCount,
         string $mediaSrc,
         string $thumbnailSrc,
@@ -85,21 +85,23 @@ class InstagramPost
         $this->commentsDisabled = $commentsDisabled;
     }
     
-    public function fromArray(array $instagramPost)
+    public static function fromArray(array $instagramPost)
     {
         return new self(
             $instagramPost['id'],
-            $instagramPost['comment'],
-            $instagramPost['commentsCount'],
-            $instagramPost['shortCode'],
-            $instagramPost['takenAtTimestamp'],
-            $instagramPost['dimensions'],
-            $instagramPost['likesCount'],
-            $instagramPost['mediaSrc'],
-            $instagramPost['thumbnailSrc'],
-            $instagramPost['ownerId'],
-            $instagramPost['video'],
-            $instagramPost['commentsDisabled']
+            $instagramPost['edge_media_to_caption']['edges'][0]['node']['text'],
+            $instagramPost['edge_media_to_comment']['count'],
+            $instagramPost['shortcode'],
+            $instagramPost['taken_at_timestamp'],
+            MediaDimensions::fromArray(
+                $instagramPost['dimensions']
+            ),
+            $instagramPost['edge_liked_by']['count'],
+            $instagramPost['display_url'],
+            $instagramPost['thumbnail_src'],
+            $instagramPost['owner']['id'],
+            $instagramPost['is_video'],
+            $instagramPost['comments_disabled']
         );
     }
     

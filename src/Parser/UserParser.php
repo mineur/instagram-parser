@@ -9,7 +9,7 @@ use Mineur\InstagramParser\Http\HttpClient;
  *
  * @package Mineur\InstagramParser\Parser
  */
-class UserAbstractParser extends AbstractParser
+class UserParser extends AbstractParser
 {
     /** @var HttpClient */
     private $httpClient;
@@ -24,7 +24,10 @@ class UserAbstractParser extends AbstractParser
         $this->httpClient = $httpClient;
     }
     
-    public function parse(string $tag, callable $callback = null)
+    public function parse(
+        string $username,
+        callable $callback = null
+    )
     {
         // TODO: ensure user variable is not empty
         // TODO: Build endpoint and make request

@@ -5,6 +5,7 @@ namespace Mineur\InstagramParser\Parser;
 use Mineur\InstagramParser\EmptyTagsException;
 use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\InstagramException;
+use Mineur\InstagramParser\Model\InstagramPost;
 
 /**
  * Class TagParser
@@ -32,7 +33,10 @@ class TagParser extends AbstractParser
      * @param string        $tag
      * @param callable|null $callback
      */
-    public function parse(string $tag, callable $callback = null)
+    public function parse(
+        string $tag,
+        callable $callback = null
+    )
     {
         $hasNextPage = true;
         $itemsPerRequest = 10;
@@ -86,7 +90,7 @@ class TagParser extends AbstractParser
      *
      * @param array         $post
      * @param callable|null $callback
-     * @return array|mixed
+     * @return InstagramPost|mixed
      */
     private function returnPostObject(
         array $post,
@@ -94,10 +98,13 @@ class TagParser extends AbstractParser
     )
     {
         if ($callback !== null) {
-            return call_user_func($callback, $post);
+            return call_user_func(
+                $callback,
+                InstagramPost::fromArray($post)
+            );
         }
     
-        return $post;
+        return InstagramPost::fromArray($post);
     }
     
     /**
