@@ -8,11 +8,7 @@ crawling the web.
 composer require mineur/instagram-parser:dev-master
 ```
 
-## Basic initialization
-Instantiate the GuzzleHttpClient adapter with just a query ID! :)
-
-
-## Parsers
+## Initialization
 The Instagram Factory class gives you the following methods to retrieve the 
 different Instagram web resources:
 
@@ -83,7 +79,7 @@ Instagram::createUserParser()
 ```
 
 #### User object
-Once you run the parser you will get a USer object like this one:
+Once you run the parser you will get a User object like this one:
 ```php
 Mineur\InstagramParser\Model\User {#33
   -id: "182889088"
@@ -107,5 +103,7 @@ Mineur\InstagramParser\Model\User {#33
 ## TODO:
 - Parse tags from the comment string and add it as an array on a object 
 property named `tag`.
-- Parse multiple elements at once.
+- Tags Streaming parser.
+- Parse multiple tags at once.
 - Test it using phpunit.
+- Geolocation parser and Geolocation streaming parser.
