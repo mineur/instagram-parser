@@ -2,7 +2,9 @@
 
 namespace Mineur\InstagramParser\Parser;
 
+use Mineur\InstagramParser\EmptyRequiredParamException;
 use Mineur\InstagramParser\Http\HttpClient;
+use Mineur\InstagramParser\InstagramException;
 
 /**
  * Class UserAbstractParser
@@ -11,6 +13,10 @@ use Mineur\InstagramParser\Http\HttpClient;
  */
 class UserParser extends AbstractParser
 {
+    // TODO: Parse user info
+    // TODO: Parse each user posts
+    // TODO: Construct and return a response User object
+    
     /** @var HttpClient */
     private $httpClient;
     
@@ -29,10 +35,32 @@ class UserParser extends AbstractParser
         callable $callback = null
     )
     {
-        // TODO: ensure user variable is not empty
-        // TODO: Build endpoint and make request
-        // TODO: Parse user info
-        // TODO: Parse each user posts
-        // TODO: Construct and return a response User object
+        $this->ensureUsernameIsNotEmpty($username);
+        
+        while(true) {
+            $endpoint = sprintf('/%s/?__a=1',
+                $username
+            );
+    
+            return $this->makeRequest($endpoint);
+        }
+    }
+    
+    private function makeRequest(string $endpoint): array
+    {
+        $response = $this
+            ->httpClient
+            ->get($endpoint);
+        
+        return json_decode((string) $response, true);
+    }
+    
+    private function ensureUsernameIsNotEmpty(string $username)
+    {
+        if (empty($username) || !isset($username)) {
+            throw new EmptyRequiredParamException(
+                'Username can not be empty.'
+            );
+        }
     }
 }

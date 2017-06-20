@@ -2,6 +2,7 @@
 
 namespace Mineur\InstagramParser\Parser;
 
+use Mineur\InstagramParser\EmptyRequiredParamException;
 use Mineur\InstagramParser\EmptyTagsException;
 use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\InstagramException;
@@ -17,14 +18,22 @@ class TagParser extends AbstractParser
     /** @var HttpClient */
     private $httpClient;
     
+    /** @var string */
+    private $queryId;
+    
     /**
      * Tags Parser constructor.
      *
      * @param HttpClient $httpClient
+     * @param string     $queryId
      */
-    public function __construct(HttpClient $httpClient)
+    public function __construct(
+        HttpClient $httpClient,
+        string $queryId
+    )
     {
         $this->httpClient = $httpClient;
+        $this->queryId = $queryId;
     }
     
     /**
@@ -40,10 +49,13 @@ class TagParser extends AbstractParser
     {
         $hasNextPage = true;
         $itemsPerRequest = 10;
+        $queryId = $this->ensureQueryIdIsNotEmpty($this->queryId);
         $this->ensureHasATagToParse($tag);
     
         while(true === $hasNextPage) {
-            $endpoint = sprintf('&tag_name=%s&first=%d&after=%s',
+            $endpoint = sprintf(
+                '/graphql/query/?query_id=%s&tag_name=%s&first=%d&after=%s',
+                $queryId,
                 $tag,
                 $itemsPerRequest,
                 $cursor ?? ''
@@ -108,13 +120,34 @@ class TagParser extends AbstractParser
     }
     
     /**
+     * Ensure Instagram GraphQL query
+     * has a non empty queryId
+     *
+     * @param string $queryId
+     * @return string
+     * @throws EmptyRequiredParamException
+     */
+    private function ensureQueryIdIsNotEmpty(string $queryId)
+    {
+        if (empty($queryId)) {
+            throw new EmptyRequiredParamException(
+                'You must include a valid queryId.'
+            );
+        }
+        
+        return $queryId;
+    }
+    
+    /**
+     * Ensure there is a tag to parse
+     *
      * @param string $tag
-     * @throws EmptyTagsException
+     * @throws EmptyRequiredParamException
      */
     private function ensureHasATagToParse(string $tag)
     {
         if (empty($tag)) {
-            throw new EmptyTagsException(
+            throw new EmptyRequiredParamException(
                 'You must parse for one tag.'
             );
         }

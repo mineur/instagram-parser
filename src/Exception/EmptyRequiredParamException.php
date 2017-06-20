@@ -4,6 +4,6 @@ namespace Mineur\InstagramParser;
 
 use Exception;
 
-class EmptyTagsException extends Exception
+class EmptyRequiredParamException extends Exception
 {
 }

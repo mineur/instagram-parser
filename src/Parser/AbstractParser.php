@@ -2,8 +2,6 @@
 
 namespace Mineur\InstagramParser\Parser;
 
-use Mineur\InstagramParser\Http\HttpClient;
-
 /**
  * Class AbstractParser
  *
@@ -11,8 +9,6 @@ use Mineur\InstagramParser\Http\HttpClient;
  */
 abstract class AbstractParser
 {
-    abstract public function __construct(HttpClient $httpClient);
-    
     abstract public function parse(
         string $parsedItem,
         callable $callback

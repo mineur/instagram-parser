@@ -6,23 +6,17 @@ use GuzzleHttp\Client;
 
 class GuzzleHttpClient implements HttpClient
 {
-    const BASE_ENDPOINT = 'https://www.instagram.com/graphql/query/?';
+    const BASE_INSTAGRAM_ENDPOINT = 'https://www.instagram.com';
     
     /** @var Client */
     private $client;
     
-    /** @var string */
-    private $queryId;
-    
     /**
      * GuzzleHttpClient constructor.
-     *
-     * @param string $queryId
      */
-    public function __construct(string $queryId)
+    public function __construct()
     {
         $this->client = new Client();
-        $this->queryId = "query_id=$queryId";
     }
     
     /**
@@ -32,9 +26,9 @@ class GuzzleHttpClient implements HttpClient
     public function get(string $endpoint): string
     {
         $clientResponse = $this->client->get(
-            self::BASE_ENDPOINT . $this->queryId . $endpoint
+            self::BASE_INSTAGRAM_ENDPOINT . $endpoint
         );
-        
+        dump($clientResponse->getBody()->getContents());
         return $clientResponse->getBody();
     }
 }
