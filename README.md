@@ -71,7 +71,16 @@ Then you will only have to access it by is getters. Like so:
 > separately, some of the Tags can have thousands of posts related to.
 
 ### User Parser
-This will give you the user info.
+This will give you the user info. In this case you don't need any `queryId`.
+```php
+use Mineur\InstagramParser\Instagram;
+use Mineur\InstagramParser\Model\User;
+
+Instagram::createUserParser()
+    ->parse('github', function(User $user) {
+        echo $user->getFullName();
+    });
+```
 
 #### User object
 Once you run the parser you will get a USer object like this one:
