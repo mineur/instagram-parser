@@ -34,15 +34,9 @@ Instagram::createTagParser($queryId)
 - You also don't need to get the data via callback, you can just use 
 `->parse('tag_name');` to get the returned InstagramPost object.
 
-> Be careful! I recommend you to enqueue the output result and treat it 
-> separately, some of the Tags can have thousands of posts related to.
-
-### User Parser
-This will give you the user info plus all posts of this user. And
-
-## InstagramPost object
-Once you run the parser in your console, you will get an object similar 
-the next one:
+#### InstagramPost object
+Once you run the tags parser in your console, you will get an infinite bunch of
+objects similar to this one:
 ```php
 Mineur\InstagramParser\Model\InstagramPost {#36
   -id: 1539101913268979330
@@ -72,6 +66,33 @@ Then you will only have to access it by is getters. Like so:
     echo $post->getLikesCount();
     //...
 });
+```
+> Be careful! I recommend you to enqueue the output result and treat it 
+> separately, some of the Tags can have thousands of posts related to.
+
+### User Parser
+This will give you the user info.
+
+#### User object
+Once you run the parser you will get a USer object like this one:
+```php
+Mineur\InstagramParser\Model\User {#33
+  -id: "182889088"
+  -username: "alexcm14"
+  -fullName: "Alex Casajuana"
+  -biography: "Software craftsman apprentice"
+  -follows: 19
+  -followedBy: 12
+  -externalUrl: null
+  -countryBlock: false
+  -isPrivate: false
+  -isVerified: true
+  -profilePictureUrl: "https://insta.gram.net/t870_a.jpg"
+  -profilePictureUrlHd: "https://insta.gram.net/t8x70_a.jpg"
+  -connectedFacebookPage: null
+  -media: array:12 [
+      // user media array
+  ]
 ```
 
 ## TODO:

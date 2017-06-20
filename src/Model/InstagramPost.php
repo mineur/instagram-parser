@@ -71,17 +71,17 @@ class InstagramPost
         ? bool $commentsDisabled
     )
     {
-        $this->id = $id;
-        $this->comment = $comment;
-        $this->commentsCount = $commentsCount;
-        $this->shortCode = $shortCode;
+        $this->id               = $id;
+        $this->comment          = $comment;
+        $this->commentsCount    = $commentsCount;
+        $this->shortCode        = $shortCode;
         $this->takenAtTimestamp = $takenAtTimestamp;
-        $this->dimensions = $dimensions;
-        $this->likesCount = $likesCount;
-        $this->mediaSrc = $mediaSrc;
-        $this->thumbnailSrc = $thumbnailSrc;
-        $this->ownerId = $ownerId;
-        $this->video = $video;
+        $this->dimensions       = $dimensions;
+        $this->likesCount       = $likesCount;
+        $this->mediaSrc         = $mediaSrc;
+        $this->thumbnailSrc     = $thumbnailSrc;
+        $this->ownerId          = $ownerId;
+        $this->video            = $video;
         $this->commentsDisabled = $commentsDisabled;
     }
     

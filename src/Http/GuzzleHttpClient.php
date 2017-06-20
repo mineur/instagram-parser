@@ -28,7 +28,7 @@ class GuzzleHttpClient implements HttpClient
         $clientResponse = $this->client->get(
             self::BASE_INSTAGRAM_ENDPOINT . $endpoint
         );
-        dump($clientResponse->getBody()->getContents());
+
         return $clientResponse->getBody();
     }
 }

@@ -5,6 +5,7 @@ namespace Mineur\InstagramParser\Parser;
 use Mineur\InstagramParser\EmptyRequiredParamException;
 use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\InstagramException;
+use Mineur\InstagramParser\Model\User;
 
 /**
  * Class UserAbstractParser
@@ -36,14 +37,22 @@ class UserParser extends AbstractParser
     )
     {
         $this->ensureUsernameIsNotEmpty($username);
-        
-        while(true) {
-            $endpoint = sprintf('/%s/?__a=1',
-                $username
-            );
     
-            return $this->makeRequest($endpoint);
+        $endpoint = sprintf(
+            '/%s/?__a=1',
+            $username
+        );
+        $response = $this->makeRequest($endpoint);
+        $user = $response['user'];
+        
+        if (null !== $callback) {
+            return call_user_func(
+                $callback,
+                User::fromArray($user)
+            );
         }
+        
+        return User::fromArray($user);
     }
     
     private function makeRequest(string $endpoint): array

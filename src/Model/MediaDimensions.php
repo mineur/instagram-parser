@@ -23,7 +23,7 @@ class MediaDimensions
     )
     {
         $this->height = $height;
-        $this->width = $width;
+        $this->width  = $width;
     }
     
     public static function fromArray(array $dimensions)
