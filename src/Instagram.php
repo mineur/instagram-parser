@@ -42,12 +42,14 @@ class Instagram
     }
     
     /**
+     * @param string $queryId
      * @return UserMediaParser
      */
-    public static function createUserMediaParser()
+    public static function createUserMediaParser(string $queryId)
     {
         return new UserMediaParser(
-            new GuzzleHttpClient()
+            new GuzzleHttpClient(),
+            $queryId
         );
     }
 }

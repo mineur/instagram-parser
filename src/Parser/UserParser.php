@@ -12,7 +12,7 @@ use Mineur\InstagramParser\Model\User;
  *
  * @package Mineur\InstagramParser\Parser
  */
-class UserParser extends AbstractParser
+class UserParser
 {
     /** @var HttpClient */
     private $httpClient;
@@ -28,30 +28,20 @@ class UserParser extends AbstractParser
     }
     
     /**
-     * @param string        $username
-     * @param callable|null $callback
+     * @param string $username
      * @return User|mixed
+     * @internal param callable|null $callback
      */
-    public function parse(
-        string $username,
-        callable $callback = null
-    )
+    public function parse(string $username)
     {
         $this->ensureUsernameIsNotEmpty($username);
-    
+        
         $endpoint = sprintf(
             '/%s/?__a=1',
             $username
         );
         $response = $this->makeRequest($endpoint);
-        $user = $response['user'];
-        
-        if (null !== $callback) {
-            return call_user_func(
-                $callback,
-                User::fromArray($user)
-            );
-        }
+        $user     = $response['user'];
         
         return User::fromArray($user);
     }
