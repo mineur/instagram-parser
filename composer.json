@@ -1,6 +1,6 @@
 {
-    "name": "mineur/instagram-api",
-    "description": "PHP api to consume the instagram feed",
+    "name": "mineur/instagram-parser",
+    "description": "PHP parser to consume the instagram feed.",
     "type": "php-library",
     "license": "MIT",
     "authors": [
