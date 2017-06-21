@@ -14,19 +14,23 @@ to work with the data.
 ```shell
 composer require mineur/instagram-parser:dev-master
 ```
+Before run your parsers, you first need a **query ID**. Follow this 5 steps to 
+get yours: [How to get a query ID](/docs/how-to-get-your-query-id.md).
 
 ## Start parsing!
-To run the parser, you first need a **query ID**. Follow this 5 steps to 
-get yours: [How to get a query ID](/docs/how-to-get-your-query-id.md).
 ```php
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\InstagramPost;
 
 $queryId = '17882293912014529';
+
 Instagram::createTagParser($queryId)
     ->parse('messi', function(InstagramPost $post) {
         echo $post->getContent();
     });
 ```
-> You don't need to cast InstagramPost if you don't want to.
+> You don't need to cast **InstagramPost** if you don't want to.
 > It is just to easy work with your IDE's autocomplete.
+
+> I recommend you to enqueue the output result, some requests can
+> return thousands, even million of posts.
