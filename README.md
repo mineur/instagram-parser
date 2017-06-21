@@ -11,23 +11,13 @@ an API. It crawls the Intagram web responses and gives you an easy interface
 to work with the data. 
 
 ## Setup
-1. Install with composer:
 ```shell
 composer require mineur/instagram-parser:dev-master
 ```
-2. Go to `http://www.instagram.com/github/`, we need a Query ID.
-<img src="/docs/img/github-page.png" alt="Instagram Github page">
-3. The go to `Web inspector > Network`.
-4. Scroll down the page and click on **Load more** blue button.
-<img src="/docs/img/load-more.png" alt="Instagram load more">
-5. Take a look at the following xhr query:
-<img src="/docs/img/xhr-queries.png" alt="Instagram xhr queries">
-6. Copy the param `query_id` like so, and keep it to build the parser.
-<img src="/docs/img/query-id.png" alt="Instagram xhr queries">
 
 ## Start parsing!
-You've got it! just pass your query ID. And you will not have to worry about 
-this ID anymore.
+To run the parser, you first need a **query ID**. Follow this 5 steps to 
+get yours: [How to get a query ID](/docs/how-to-get-your-query-id.md).
 ```php
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\InstagramPost;
