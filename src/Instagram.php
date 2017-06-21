@@ -5,6 +5,7 @@ namespace Mineur\InstagramParser;
 use Mineur\InstagramParser\Http\GuzzleHttpClient;
 use Mineur\InstagramParser\Parser\TagParser;
 use Mineur\InstagramParser\Parser\UserParser;
+use Mineur\InstagramParser\Parser\UserMediaParser;
 
 /**
  * Class Instagram
@@ -36,6 +37,16 @@ class Instagram
     public static function createUserParser()
     {
         return new UserParser(
+            new GuzzleHttpClient()
+        );
+    }
+    
+    /**
+     * @return UserMediaParser
+     */
+    public static function createUserMediaParser()
+    {
+        return new UserMediaParser(
             new GuzzleHttpClient()
         );
     }

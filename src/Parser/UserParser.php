@@ -14,10 +14,6 @@ use Mineur\InstagramParser\Model\User;
  */
 class UserParser extends AbstractParser
 {
-    // TODO: Parse user info
-    // TODO: Parse each user posts
-    // TODO: Construct and return a response User object
-    
     /** @var HttpClient */
     private $httpClient;
     
@@ -31,6 +27,11 @@ class UserParser extends AbstractParser
         $this->httpClient = $httpClient;
     }
     
+    /**
+     * @param string        $username
+     * @param callable|null $callback
+     * @return User|mixed
+     */
     public function parse(
         string $username,
         callable $callback = null
@@ -55,6 +56,10 @@ class UserParser extends AbstractParser
         return User::fromArray($user);
     }
     
+    /**
+     * @param string $endpoint
+     * @return array
+     */
     private function makeRequest(string $endpoint): array
     {
         $response = $this
@@ -64,6 +69,10 @@ class UserParser extends AbstractParser
         return json_decode((string) $response, true);
     }
     
+    /**
+     * @param string $username
+     * @throws EmptyRequiredParamException
+     */
     private function ensureUsernameIsNotEmpty(string $username)
     {
         if (empty($username) || !isset($username)) {
