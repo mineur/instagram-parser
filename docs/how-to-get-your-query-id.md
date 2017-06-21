@@ -1,14 +1,14 @@
 # How to get your query Id
-Instagram uses GraphQL for ist API, and this needs a mandatory parameter named 
+Instagram uses GraphQL for its API, and needs a mandatory parameter named 
 `query_id` to make the internal requests.
 
 This is an easy method to get your query ID. Once you get one, you don't need 
 to worry about this anymore.
 
-1. Go to `http://www.instagram.com/github/`, we need a Query ID.
+1. Run your browser and type `http://www.instagram.com/github/`.
 <img src="img/github-page.png" alt="Instagram Github page" width="500">
 
-2. The go to `Web Inspector > Network > xhr`.
+2. Then, go to `Web Inspector > Network > xhr`.
 <img src="img/web-inspector.png" alt="Chrome web inspector" width="500">
 
 3. Scroll down the page and click on **Load more** blue button.
@@ -21,4 +21,4 @@ to worry about this anymore.
 <img src="img/query-id.png" alt="Instagram xhr queries" width="500">
 
 ## You're done!
-Now you can go back with your query ID: [Go to home readme](../README.md)
+Now you can go back with your query ID: [home readme](../README.md)

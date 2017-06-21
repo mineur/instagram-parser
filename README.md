@@ -6,9 +6,11 @@ Instagram Parser
 [![Latest Unstable Version](https://poser.pugx.org/mineur/instagram-parser/v/unstable)](https://packagist.org/packages/mineur/instagram-parser)
 [![Total Downloads](https://poser.pugx.org/mineur/instagram-parser/downloads)](https://packagist.org/packages/mineur/instagram-parser)
 
-The Instagram web parser. It just works like a simple API, but without being 
-an API. It crawls the Intagram web responses and gives you an easy interface 
-to work with the data. 
+The Instagram web parser gives you an easy interface to parse the Instagram's
+data. Like if it was an API, but without being it! 
+
+You can get posts related to a tag and all user posts, including its personal 
+info. And more features are comming...
 
 ## Setup
 ```shell
@@ -32,5 +34,5 @@ Instagram::createTagParser($queryId)
 > You don't need to cast **InstagramPost** if you don't want to.
 > It is just to easy work with your IDE's autocomplete.
 
-> I recommend you to enqueue the output result, some requests can
-> return thousands, even million of posts.
+> Be careful! I recommend you to enqueue the output result and treat it separately, 
+> some of the Tags can have thousands of posts related to.
