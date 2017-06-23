@@ -28,7 +28,7 @@ $queryId = '17882293912014529';
 
 Instagram::createTagParser($queryId)
     ->parse('messi', function(InstagramPost $post) {
-        echo $post->getContent();
+        echo $post->getComment();
     });
 ```
 > You don't need to cast **InstagramPost** if you don't want to.
