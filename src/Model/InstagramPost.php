@@ -88,7 +88,7 @@ class InstagramPost
     public static function fromArray(array $instagramPost)
     {
         return new self(
-            $instagramPost['id'],
+            (int) $instagramPost['id'],
             $instagramPost['edge_media_to_caption']['edges'][0]['node']['text'],
             $instagramPost['edge_media_to_comment']['count'],
             $instagramPost['shortcode'],
@@ -96,7 +96,7 @@ class InstagramPost
             MediaDimensions::fromArray(
                 $instagramPost['dimensions']
             ),
-            $instagramPost['edge_liked_by']['count'],
+            (int) $instagramPost['edge_liked_by']['count'],
             $instagramPost['display_url'],
             $instagramPost['thumbnail_src'],
             $instagramPost['owner']['id'],

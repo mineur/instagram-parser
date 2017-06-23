@@ -28,7 +28,10 @@ class MediaDimensions
     
     public static function fromArray(array $dimensions)
     {
-        return new self($dimensions['height'], $dimensions['width']);
+        return new self(
+            (int) $dimensions['height'],
+            (int) $dimensions['width']
+        );
     }
     
     /** @return int */
