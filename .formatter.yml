@@ -1,0 +1,18 @@
+use-sort:
+    group:
+        - _main
+        - Mineur
+    group-type: each
+    sort-type: alph
+    sort-direction: asc
+
+strict: true
+header: |
+    /*
+     * Mineur/instagram-parser package
+     *
+     * Feel free to contribute!
+     *
+     * @license MIT
+     * @author alexhoma <alexcm.14@gmail.com>
+     */

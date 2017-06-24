@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * Mineur/instagram-parser package
+ *
+ * Feel free to contribute!
+ *
+ * @license MIT
+ * @author alexhoma <alexcm.14@gmail.com>
+ */
+
+declare(strict_types=1);
+
 namespace Mineur\InstagramParser\Model;
 
 class InstagramPost
@@ -58,7 +69,7 @@ class InstagramPost
      */
     private function __construct(
         int $id,
-        string $comment,
+        ? string $comment,
         int $commentsCount,
         string $shortCode,
         string $takenAtTimestamp,

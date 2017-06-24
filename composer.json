@@ -18,7 +18,8 @@
         "phpunit/phpunit": "^6.1",
         "symfony/var-dumper": "^3.2",
         "mockery/mockery": "^0.9.9",
-        "fzaninotto/faker": "^1.6"
+        "fzaninotto/faker": "^1.6",
+        "mmoreram/php-formatter": "^1.3"
     },
     "autoload": {
         "psr-4": {
@@ -32,5 +33,12 @@
     },
     "config": {
         "bin-dir": "bin"
+    },
+    "scripts": {
+        "fix-code": [
+            "bin/php-formatter formatter:header:fix . --exclude=vendor",
+            "bin/php-formatter formatter:strict:fix . --exclude=vendor",
+            "bin/php-formatter formatter:use:sort . --exclude=vendor"
+        ]
     }
 }
