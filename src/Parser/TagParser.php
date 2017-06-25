@@ -9,12 +9,9 @@
  * @author alexhoma <alexcm.14@gmail.com>
  */
 
-declare(strict_types=1);
-
 namespace Mineur\InstagramParser\Parser;
 
 use Mineur\InstagramParser\EmptyRequiredParamException;
-use Mineur\InstagramParser\EmptyTagsException;
 use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\InstagramException;
 use Mineur\InstagramParser\Model\InstagramPost;
@@ -44,7 +41,7 @@ class TagParser extends AbstractParser
     )
     {
         $this->httpClient = $httpClient;
-        $this->queryId = $queryId;
+        $this->queryId    = $queryId;
     }
     
     /**
@@ -58,12 +55,12 @@ class TagParser extends AbstractParser
         callable $callback = null
     )
     {
-        $hasNextPage = true;
+        $hasNextPage     = true;
         $itemsPerRequest = 10;
-        $queryId = $this->ensureQueryIdIsNotEmpty($this->queryId);
+        $queryId         = $this->ensureQueryIdIsNotEmpty($this->queryId);
         $this->ensureHasATagToParse($tag);
-    
-        while(true === $hasNextPage) {
+        
+        while (true === $hasNextPage) {
             $endpoint = sprintf(
                 '/graphql/query/?query_id=%s&tag_name=%s&first=%d&after=%s',
                 $queryId,
@@ -75,9 +72,9 @@ class TagParser extends AbstractParser
             $response    = $this->makeRequest($endpoint);
             $cursor      = $response['page_info']['end_cursor'];
             $hasNextPage = $response['page_info']['has_next_page'];
-    
+            
             $posts = $response['edges'];
-            foreach($posts as $post) {
+            foreach ($posts as $post) {
                 $this->returnPostObject($post['node'], $callback);
             }
             
@@ -106,28 +103,6 @@ class TagParser extends AbstractParser
         }
         
         return $parsedResponse['data']['hashtag']['edge_hashtag_to_media'];
-    }
-    
-    /**
-     * Return an hydrated InstagramPost object
-     *
-     * @param array         $post
-     * @param callable|null $callback
-     * @return InstagramPost|mixed
-     */
-    private function returnPostObject(
-        array $post,
-        callable $callback = null
-    )
-    {
-        if ($callback !== null) {
-            return call_user_func(
-                $callback,
-                InstagramPost::fromArray($post)
-            );
-        }
-    
-        return InstagramPost::fromArray($post);
     }
     
     /**

@@ -9,9 +9,9 @@
  * @author alexhoma <alexcm.14@gmail.com>
  */
 
-declare(strict_types=1);
-
 namespace Mineur\InstagramParser\Parser;
+
+use Mineur\InstagramParser\Model\InstagramPost;
 
 /**
  * Class AbstractParser
@@ -24,4 +24,26 @@ abstract class AbstractParser
         string $parsedItem,
         callable $callback
     );
+    
+    /**
+     * Return an hydrated InstagramPost object
+     *
+     * @param array         $post
+     * @param callable|null $callback
+     * @return InstagramPost|mixed
+     */
+    protected function returnPostObject(
+        array $post,
+        callable $callback = null
+    )
+    {
+        if ($callback !== null) {
+            return call_user_func(
+                $callback,
+                InstagramPost::fromArray($post)
+            );
+        }
+        
+        return InstagramPost::fromArray($post);
+    }
 }

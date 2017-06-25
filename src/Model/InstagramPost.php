@@ -9,8 +9,6 @@
  * @author alexhoma <alexcm.14@gmail.com>
  */
 
-declare(strict_types=1);
-
 namespace Mineur\InstagramParser\Model;
 
 class InstagramPost

@@ -9,14 +9,11 @@
  * @author alexhoma <alexcm.14@gmail.com>
  */
 
-declare(strict_types=1);
-
 namespace Mineur\InstagramParser\Parser;
 
 use Mineur\InstagramParser\EmptyRequiredParamException;
 use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\InstagramException;
-use Mineur\InstagramParser\Model\InstagramPost;
 
 class UserMediaParser extends AbstractParser
 {
@@ -59,7 +56,6 @@ class UserMediaParser extends AbstractParser
                 $itemsPerRequest,
                 $cursor ?? ''
             );
-            dump($endpoint);
             
             $response    = $this->makeRequest($endpoint);
             $cursor      = $response['page_info']['end_cursor'];
@@ -94,21 +90,6 @@ class UserMediaParser extends AbstractParser
         }
         
         return $parsedResponse['data']['user']['edge_owner_to_timeline_media'];
-    }
-    
-    private function returnPostObject(
-        array $post,
-        callable $callback = null
-    )
-    {
-        if ($callback !== null) {
-            return call_user_func(
-                $callback,
-                InstagramPost::fromArray($post)
-            );
-        }
-        
-        return InstagramPost::fromArray($post);
     }
     
     /**

@@ -6,7 +6,7 @@ use-sort:
     sort-type: alph
     sort-direction: asc
 
-strict: true
+strict: ~
 header: |
     /*
      * Mineur/instagram-parser package

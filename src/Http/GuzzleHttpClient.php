@@ -9,8 +9,6 @@
  * @author alexhoma <alexcm.14@gmail.com>
  */
 
-declare(strict_types=1);
-
 namespace Mineur\InstagramParser\Http;
 
 use GuzzleHttp\Client;
@@ -39,7 +37,7 @@ class GuzzleHttpClient implements HttpClient
         $clientResponse = $this->client->get(
             self::BASE_INSTAGRAM_ENDPOINT . $endpoint
         );
-
-        return $clientResponse->getBody();
+        
+        return $clientResponse->getBody()->getContents();
     }
 }
