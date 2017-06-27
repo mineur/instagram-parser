@@ -17,8 +17,8 @@ Before run your parsers, you first need a **query ID**. Follow this 5 steps to
 get yours: [How to get a query ID](/docs/setup.md#how-to-get-your-query-id).
 
 ## Start parsing!
-Start parsing all posts tagged with "messi" for instance. You will get an infinite 
-amount of data.
+Start parsing all data tagged with "github" for instance. You will get an infinite 
+loop of posts.
 ```php
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\InstagramPost;
@@ -26,7 +26,7 @@ use Mineur\InstagramParser\Model\InstagramPost;
 $queryId = '17882293912014529';
 
 Instagram::createTagParser($queryId)
-    ->parse('messi', function(InstagramPost $post) {
+    ->parse('github', function(InstagramPost $post) {
         dump($post->getComment());
     });
 ```

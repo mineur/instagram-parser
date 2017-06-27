@@ -104,7 +104,7 @@ class InstagramPost
     {
         return new self(
             (int) $instagramPost['id'],
-            $instagramPost['edge_media_to_caption']['edges'][0]['node']['text'],
+            $instagramPost['edge_media_to_caption']['edges'][0]['node']['text'] ?? null,
             $instagramPost['edge_media_to_comment']['count'],
             $instagramPost['shortcode'],
             $instagramPost['taken_at_timestamp'],
