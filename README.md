@@ -17,7 +17,7 @@ info. And more features are comming...
 composer require mineur/instagram-parser:dev-master
 ```
 Before run your parsers, you first need a **query ID**. Follow this 5 steps to 
-get yours: [How to get a query ID](/docs/how-to-get-your-query-id.md).
+get yours: [How to get a query ID](/docs/setup.md#how-to-get-your-query-id).
 
 ## Start parsing!
 ```php
@@ -37,13 +37,5 @@ Instagram::createTagParser($queryId)
 > Be careful! I recommend you to enqueue the output result and treat it separately, 
 > some of the Tags can have thousands of posts related to.
 
-## Contributing
-- Fork it: `git clone https://github.com/{YOUR_USERNAME}/instagram-parser.git`
-- Checkout your branch: 
-    - `git checkout -b feature/your-feature-name`
-    - `git checkout -b fix/your-fix-name`
-- Make your changes, add the tests and pass it: `bin/phpunit`
-- Fix the code format: `composer fix-code`
-- Commit your changes: `git commit -am 'Your descriptive commit'`
-- Push your changes: `git push origin your-branch-name`
-- Submit your pull request with a good description.
+## Documentation
+For more information about this library [see the docs](/docs/index.md).

@@ -1,4 +1,10 @@
-# How to get your query Id
+# Setup
+## Installation
+```shell
+composer require mineur/instagram-parser:dev-master
+```
+
+## How to get your query Id
 Instagram uses GraphQL for its API, and needs a mandatory parameter named 
 `query_id` to make the internal requests.
 

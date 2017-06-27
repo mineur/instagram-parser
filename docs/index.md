@@ -1,0 +1,15 @@
+# Instagram Parser Documentation
+
+- [Set up](#basic-initialization)
+    - [Installation](how-to-get-your-query-id.md)
+    - [How to get your query Id](how-to-get-your-query-id.md)
+- [Usage](usage.md)
+    - [Get tags](usage.md#get-tags)
+    - [Get user media](usage.md#get-user-media)
+- [The Response](the-response.md)
+    - [Instagram Post](the-response.md#instagram-post-object)
+    - [User](the-response.md#user-object)
+- [Integrations](integrations.md)
+    - [Symfony](integrations.md#symfony)
+- [Contributing](contributing.md)
+- [To-do](todo.md)
