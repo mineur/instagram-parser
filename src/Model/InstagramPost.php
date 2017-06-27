@@ -94,6 +94,12 @@ class InstagramPost
         $this->commentsDisabled = $commentsDisabled;
     }
     
+    /**
+     * Create Instagram Post Object from array
+     *
+     * @param array $instagramPost
+     * @return InstagramPost
+     */
     public static function fromArray(array $instagramPost)
     {
         return new self(
@@ -111,6 +117,54 @@ class InstagramPost
             $instagramPost['owner']['id'],
             $instagramPost['is_video'],
             $instagramPost['comments_disabled']
+        );
+    }
+    
+    /**
+     * Return Instagram Post object to Array
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'id'                 => $this->id,
+            'comment'            => $this->comment,
+            'comments_count'     => $this->commentsCount,
+            'short_code'         => $this->shortCode,
+            'taken_at_timestamp' => $this->takenAtTimestamp,
+            'dimensions'         => $this->dimensions->toArray(),
+            'likes_count'        => $this->likesCount,
+            'media_src'          => $this->mediaSrc,
+            'thumbnail_src'      => $this->thumbnailSrc,
+            'owner_id'           => $this->ownerId,
+            'video'              => $this->video,
+            'comments_disabled'  => $this->commentsDisabled
+        ];
+    }
+    
+    /**
+     * Return serialized Instagram Post object
+     *
+     * @return string
+     */
+    public function serialized(): string
+    {
+        return serialize(
+            new self(
+                $this->id,
+                $this->comment,
+                $this->commentsCount,
+                $this->shortCode,
+                $this->takenAtTimestamp,
+                $this->dimensions,
+                $this->likesCount,
+                $this->mediaSrc,
+                $this->thumbnailSrc,
+                $this->ownerId,
+                $this->video,
+                $this->commentsDisabled
+            )
         );
     }
     

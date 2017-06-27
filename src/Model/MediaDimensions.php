@@ -35,6 +35,12 @@ class MediaDimensions
         $this->width  = $width;
     }
     
+    /**
+     * Create Media Dimensions from array
+     *
+     * @param array $dimensions
+     * @return MediaDimensions
+     */
     public static function fromArray(array $dimensions)
     {
         return new self(
@@ -43,15 +49,26 @@ class MediaDimensions
         );
     }
     
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'height' => (int) $this->height,
+            'width'  => (int) $this->width
+        ];
+    }
+    
     /** @return int */
     public function getWidth(): int
     {
-        return $this->width;
+        return (int) $this->width;
     }
     
     /** @return int */
     public function getHeight(): int
     {
-        return $this->height;
+        return (int) $this->height;
     }
 }
