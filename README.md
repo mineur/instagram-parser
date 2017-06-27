@@ -30,6 +30,8 @@ Instagram::createTagParser($queryId)
         dump($post->getComment());
     });
 ```
+### Output:
+![](http://thumbs.gfycat.com/SpiritedAlarmedCopepod-size_restricted.gif)
 
 
 ## Motivation
