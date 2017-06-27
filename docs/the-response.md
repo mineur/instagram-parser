@@ -1,9 +1,9 @@
 # The response objects
+In this section you will se the kind of output you will receive once you run the 
+parsers.
 
 ## Instagram Post object
-Once you run the tags parser in your console, you will get an infinite bunch of
-objects similar to this one:
-
+Every parser that returns instagram posts will give you an object like this one: 
 ```php
 Mineur\InstagramParser\Model\InstagramPost {#36
   -id: 1539101913268979330
@@ -25,14 +25,29 @@ Mineur\InstagramParser\Model\InstagramPost {#36
   -commentsDisabled: false
 }
 ```
+Then you will be able to access it using the following ways:
+- Using the class getters:
+```php
+$post->getComment();
+```
+- Transforming the object to an array:
+```php
+$aPost = $post->toArray();
+$aPost['comment'];
+```
+- Serializing the object:
+```php
+$post->serialize();
+```
 
 ## User object
-Once you run the parser you will get a Uer object like this one:
+Same happens with the User object. Once you run the User Parser, the output will 
+be an object like this one:
 ```php
 Mineur\InstagramParser\Model\User {#33
   -id: "182889088"
-  -username: "alexcm14"
-  -fullName: "Alex Casajuana"
+  -username: "alexhoma"
+  -fullName: "Alex"
   -biography: "Software craftsman apprentice"
   -follows: 19
   -followedBy: 12
@@ -46,4 +61,19 @@ Mineur\InstagramParser\Model\User {#33
   -media: array:12 [
       // user media array
   ]
+}
+```
+You will be able to access it using the following ways:
+- Using the class getters:
+```php
+$user->getFullName();
+```
+- Transforming the object to an array:
+```php
+$aUser = $user->toArray();
+$aUser['full_name'];
+```
+- Serializing the object:
+```php
+$user->serialize();
 ```

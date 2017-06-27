@@ -1,8 +1,8 @@
 # Instagram Parser Documentation
 
-- [Set up](#basic-initialization)
-    - [Installation](how-to-get-your-query-id.md)
-    - [How to get your query Id](how-to-get-your-query-id.md)
+- [Set up](setup.md)
+    - [Installation](setup.md#installation)
+    - [How to get your query Id](setup.md#how-to-get-your-query-id)
 - [Usage](usage.md)
     - [Get tags](usage.md#get-tags)
     - [Get user media](usage.md#get-user-media)

@@ -6,11 +6,8 @@ Instagram Parser
 [![Latest Unstable Version](https://poser.pugx.org/mineur/instagram-parser/v/unstable)](https://packagist.org/packages/mineur/instagram-parser)
 [![Total Downloads](https://poser.pugx.org/mineur/instagram-parser/downloads)](https://packagist.org/packages/mineur/instagram-parser)
 
-The Instagram web parser gives you an easy interface to parse the Instagram's
-data. Like if it was an API, but without being it! 
-
-You can get posts related to a tag and all user posts, including its personal 
-info. And more features are comming...
+The Instagram parser gives you an easy interface to parse all the Instagram's
+data. Like an API, but without being it! You can get posts by a tag, all user posts 
 
 ## Setup
 ```shell
@@ -20,6 +17,8 @@ Before run your parsers, you first need a **query ID**. Follow this 5 steps to
 get yours: [How to get a query ID](/docs/setup.md#how-to-get-your-query-id).
 
 ## Start parsing!
+Start parsing all posts tagged with "messi" for instance. You will get an infinite 
+amount of data.
 ```php
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\InstagramPost;
@@ -28,14 +27,18 @@ $queryId = '17882293912014529';
 
 Instagram::createTagParser($queryId)
     ->parse('messi', function(InstagramPost $post) {
-        echo $post->getComment();
+        dump($post->getComment());
     });
 ```
-> You don't need to cast **InstagramPost** if you don't want to.
-> It is just to easy work with your IDE's autocomplete.
 
-> Be careful! I recommend you to enqueue the output result and treat it separately, 
-> some of the Tags can have thousands of posts related to.
+
+## Motivation
+Since Instagram has restricted its API only to registered and verified applications, 
+you can't get all of its public data being an experimental user or a data science 
+analyst who just wants to play with that, you only have access to the API sandbox mode.
+
+So I decided to create an alternative parser on top of GuzzleHttp library to access 
+to the entire data with a nice interface.
 
 ## Documentation
 For more information about this library [see the docs](/docs/index.md).

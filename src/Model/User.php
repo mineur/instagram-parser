@@ -89,6 +89,12 @@ class User
         $this->media                 = $media;
     }
     
+    /**
+     * Create user from array
+     *
+     * @param array $user
+     * @return User
+     */
     public static function fromArray(array $user)
     {
         return new self(
@@ -106,6 +112,58 @@ class User
             $user['profile_pic_url_hd'],
             $user['connected_fb_page'],
             $user['media']['nodes']
+        );
+    }
+    
+    /**
+     * Return User object as Array
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'id'                      => $this->id,
+            'username'                => $this->username,
+            'full_name'               => $this->fullName,
+            'biography'               => $this->biography,
+            'follows'                 => $this->follows,
+            'followed_by'             => $this->followedBy,
+            'external_url'            => $this->externalUrl,
+            'country_block'           => $this->countryBlock,
+            'is_private'              => $this->isPrivate,
+            'is_verified'             => $this->isVerified,
+            'profile_pictureUrl'      => $this->profilePictureUrl,
+            'profile_picture_url_hd'  => $this->profilePictureUrlHd,
+            'connected_facebook_page' => $this->connectedFacebookPage,
+            'media'                   => $this->media
+        ];
+    }
+    
+    /**
+     * Return serialized User object
+     *
+     * @return string
+     */
+    public function serialized(): string
+    {
+        return serialize(
+            new self(
+                $this->id,
+                $this->username,
+                $this->fullName,
+                $this->biography,
+                $this->follows,
+                $this->followedBy,
+                $this->externalUrl,
+                $this->countryBlock,
+                $this->isPrivate,
+                $this->isVerified,
+                $this->profilePictureUrl,
+                $this->profilePictureUrlHd,
+                $this->connectedFacebookPage,
+                $this->media
+            )
         );
     }
     
