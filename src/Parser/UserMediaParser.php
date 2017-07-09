@@ -15,6 +15,11 @@ use Mineur\InstagramParser\EmptyRequiredParamException;
 use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\InstagramException;
 
+/**
+ * Class UserMediaParser
+ *
+ * @package Mineur\InstagramParser\Parser
+ */
 class UserMediaParser extends AbstractParser
 {
     /** @var HttpClient */

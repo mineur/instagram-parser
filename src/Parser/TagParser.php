@@ -14,7 +14,6 @@ namespace Mineur\InstagramParser\Parser;
 use Mineur\InstagramParser\EmptyRequiredParamException;
 use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\InstagramException;
-use Mineur\InstagramParser\Model\InstagramPost;
 
 /**
  * Class TagParser
