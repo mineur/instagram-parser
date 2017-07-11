@@ -56,6 +56,24 @@ class User
     /** @var array */
     private $media;
     
+    /**
+     * User constructor.
+     *
+     * @param string      $id
+     * @param string      $username
+     * @param null|string $fullName
+     * @param null|string $biography
+     * @param int         $follows
+     * @param int         $followedBy
+     * @param null|string $externalUrl
+     * @param bool        $countryBlock
+     * @param bool        $isPrivate
+     * @param bool        $isVerified
+     * @param string      $profilePictureUrl
+     * @param string      $profilePictureUrlHd
+     * @param null|string $connectedFacebookPage
+     * @param array       $media
+     */
     private function __construct(
         string $id,
         string $username,

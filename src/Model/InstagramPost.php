@@ -11,6 +11,11 @@
 
 namespace Mineur\InstagramParser\Model;
 
+/**
+ * Class InstagramPost
+ *
+ * @package Mineur\InstagramParser\Model
+ */
 class InstagramPost
 {
     /** @var int */
@@ -21,6 +26,9 @@ class InstagramPost
     
     /** @var int */
     private $commentsCount;
+    
+    /** @var array */
+    private $tags = [];
     
     /** @var string */
     private $shortCode;
@@ -55,6 +63,7 @@ class InstagramPost
      * @param int             $id
      * @param string          $comment
      * @param int             $commentsCount
+     * @param TagCollection   $tags
      * @param string          $shortCode
      * @param string          $takenAtTimestamp
      * @param MediaDimensions $dimensions
@@ -69,6 +78,7 @@ class InstagramPost
         int $id,
         ? string $comment,
         int $commentsCount,
+        TagCollection $tags,
         string $shortCode,
         string $takenAtTimestamp,
         MediaDimensions $dimensions,
@@ -83,6 +93,7 @@ class InstagramPost
         $this->id               = $id;
         $this->comment          = $comment;
         $this->commentsCount    = $commentsCount;
+        $this->tags             = $tags;
         $this->shortCode        = $shortCode;
         $this->takenAtTimestamp = $takenAtTimestamp;
         $this->dimensions       = $dimensions;
@@ -106,6 +117,9 @@ class InstagramPost
             (int) $instagramPost['id'],
             $instagramPost['edge_media_to_caption']['edges'][0]['node']['text'] ?? null,
             $instagramPost['edge_media_to_comment']['count'],
+            TagCollection::fromString(
+                $instagramPost['edge_media_to_caption']['edges'][0]['node']['text'] ?? null
+            ),
             $instagramPost['shortcode'],
             $instagramPost['taken_at_timestamp'],
             MediaDimensions::fromArray(
@@ -131,6 +145,7 @@ class InstagramPost
             'id'                 => $this->id,
             'comment'            => $this->comment,
             'comments_count'     => $this->commentsCount,
+            'tags'               => $this->tags->getTags(),
             'short_code'         => $this->shortCode,
             'taken_at_timestamp' => $this->takenAtTimestamp,
             'dimensions'         => $this->dimensions->toArray(),
@@ -155,6 +170,7 @@ class InstagramPost
                 $this->id,
                 $this->comment,
                 $this->commentsCount,
+                $this->tags,
                 $this->shortCode,
                 $this->takenAtTimestamp,
                 $this->dimensions,
@@ -174,8 +190,8 @@ class InstagramPost
         return $this->id;
     }
     
-    /** @return string */
-    public function getComment(): string
+    /** @return null|string */
+    public function getComment(): ? string
     {
         return $this->comment;
     }
@@ -184,6 +200,12 @@ class InstagramPost
     public function getCommentsCount(): int
     {
         return $this->commentsCount;
+    }
+    
+    /** @return array */
+    public function getTags(): array
+    {
+        return $this->tags;
     }
     
     /** @return string */
@@ -235,7 +257,7 @@ class InstagramPost
     }
     
     /** @return bool|null */
-    public function getCommentsDisabled()
+    public function getCommentsDisabled(): ? bool
     {
         return $this->commentsDisabled;
     }

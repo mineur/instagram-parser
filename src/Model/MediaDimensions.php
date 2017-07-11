@@ -12,6 +12,11 @@
 namespace Mineur\InstagramParser\Model;
 
 
+/**
+ * Class MediaDimensions
+ *
+ * @package Mineur\InstagramParser\Model
+ */
 class MediaDimensions
 {
     /** @var int */
