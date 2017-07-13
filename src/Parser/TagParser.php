@@ -74,6 +74,8 @@ class TagParser extends AbstractParser
             
             $posts = $response['edges'];
             foreach ($posts as $post) {
+                $post['node']['hash_reference'] = $cursor;
+                
                 $this->returnPostObject($post['node'], $callback);
             }
             

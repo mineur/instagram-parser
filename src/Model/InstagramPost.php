@@ -57,6 +57,9 @@ class InstagramPost
     /** @var bool|null */
     private $commentsDisabled;
     
+    /** @var string|null */
+    private $hashReference;
+    
     /**
      * InstagramPost constructor.
      *
@@ -73,6 +76,7 @@ class InstagramPost
      * @param string          $ownerId
      * @param bool            $video
      * @param bool|null       $commentsDisabled
+     * @param null|string     $hashReference
      */
     private function __construct(
         int $id,
@@ -87,7 +91,8 @@ class InstagramPost
         string $thumbnailSrc,
         string $ownerId,
         bool $video,
-        ? bool $commentsDisabled
+        ? bool $commentsDisabled,
+        ? string $hashReference
     )
     {
         $this->id               = $id;
@@ -103,6 +108,7 @@ class InstagramPost
         $this->ownerId          = $ownerId;
         $this->video            = $video;
         $this->commentsDisabled = $commentsDisabled;
+        $this->hashReference    = $hashReference;
     }
     
     /**
@@ -130,7 +136,8 @@ class InstagramPost
             $instagramPost['thumbnail_src'],
             $instagramPost['owner']['id'],
             $instagramPost['is_video'],
-            $instagramPost['comments_disabled']
+            $instagramPost['comments_disabled'],
+            $instagramPost['hash_reference'] ?? null
         );
     }
     
@@ -154,7 +161,8 @@ class InstagramPost
             'thumbnail_src'      => $this->thumbnailSrc,
             'owner_id'           => $this->ownerId,
             'video'              => $this->video,
-            'comments_disabled'  => $this->commentsDisabled
+            'comments_disabled'  => $this->commentsDisabled,
+            'hash_reference'     => $this->hashReference
         ];
     }
     
@@ -179,7 +187,8 @@ class InstagramPost
                 $this->thumbnailSrc,
                 $this->ownerId,
                 $this->video,
-                $this->commentsDisabled
+                $this->commentsDisabled,
+                $this->hashReference
             )
         );
     }
@@ -260,5 +269,17 @@ class InstagramPost
     public function getCommentsDisabled(): ? bool
     {
         return $this->commentsDisabled;
+    }
+    
+    /** @return bool|null */
+    public function getHashReference(): ? string
+    {
+        return $this->hashReference;
+    }
+    
+    /** @param string $hashReference */
+    public function setHashReference(string $hashReference)
+    {
+        $this->hashReference = $hashReference;
     }
 }
