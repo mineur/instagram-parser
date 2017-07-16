@@ -214,7 +214,7 @@ class InstagramPost
     /** @return array */
     public function getTags(): array
     {
-        return $this->tags;
+        return $this->tags->getTags();
     }
     
     /** @return string */
