@@ -22,6 +22,9 @@ use Mineur\InstagramParser\Model\User;
  */
 class UserParser
 {
+    /** Resource endpoint */
+    const ENDPOINT = '/%s/?__a=1';
+    
     /** @var HttpClient */
     private $httpClient;
     
@@ -45,7 +48,7 @@ class UserParser
         $this->ensureUsernameIsNotEmpty($username);
         
         $endpoint = sprintf(
-            '/%s/?__a=1',
+            self::ENDPOINT,
             $username
         );
         $response = $this->makeRequest($endpoint);

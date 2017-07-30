@@ -22,6 +22,9 @@ use Mineur\InstagramParser\InstagramException;
  */
 class TagParser extends AbstractParser
 {
+    /** Resource endpoint */
+    const ENDPOINT = '/graphql/query/?query_id=%s&tag_name=%s&first=%d&after=%s';
+    
     /** @var HttpClient */
     private $httpClient;
     
@@ -61,7 +64,7 @@ class TagParser extends AbstractParser
         
         while (true === $hasNextPage) {
             $endpoint = sprintf(
-                '/graphql/query/?query_id=%s&tag_name=%s&first=%d&after=%s',
+                self::ENDPOINT,
                 $queryId,
                 $tag,
                 $itemsPerRequest,

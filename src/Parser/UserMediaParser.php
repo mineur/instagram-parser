@@ -22,6 +22,9 @@ use Mineur\InstagramParser\InstagramException;
  */
 class UserMediaParser extends AbstractParser
 {
+    /** Resource endpoint */
+    const ENDPOINT = '/graphql/query/?query_id=%s&id=%s&first=%d&after=%s';
+    
     /** @var HttpClient */
     private $httpClient;
     
@@ -55,7 +58,7 @@ class UserMediaParser extends AbstractParser
         
         while (true === $hasNextPage) {
             $endpoint = sprintf(
-                '/graphql/query/?query_id=%s&id=%s&first=%d&after=%s',
+                self::ENDPOINT,
                 $queryId,
                 $userId,
                 $itemsPerRequest,
@@ -70,7 +73,7 @@ class UserMediaParser extends AbstractParser
             foreach ($media as $post) {
                 $this->returnPostObject($post['node'], $callback);
             }
-    
+            
             sleep(rand(0, 3)); // avoid DoS
         }
     }
