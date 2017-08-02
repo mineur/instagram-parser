@@ -40,7 +40,8 @@ class TagCollection
     public static function fromString(? string $text): self
     {
         if (null === $text) {
-            return new self([]);
+            $emptyArray = [];
+            return new self($emptyArray);
         }
         
         preg_match_all("/(#\w+)/u", $text, $tags);
