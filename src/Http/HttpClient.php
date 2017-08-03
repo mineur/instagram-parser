@@ -15,7 +15,11 @@ interface HttpClient
 {
     /**
      * @param string $endpoint
+     * @param array  $options
      * @return string
      */
-    public function get(string $endpoint): string;
+    public function get(
+        string $endpoint,
+        array $options
+    ) : string;
 }

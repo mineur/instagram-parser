@@ -9,7 +9,7 @@
  * @author alexhoma <alexcm.14@gmail.com>
  */
 
-namespace Mineur\InstagramParser;
+namespace Mineur\InstagramParser\Exception;
 
 use Exception;
 

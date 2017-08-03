@@ -11,9 +11,9 @@
 
 namespace Mineur\InstagramParser\Parser;
 
-use Mineur\InstagramParser\EmptyRequiredParamException;
+use Mineur\InstagramParser\Exception\EmptyRequiredParamException;
 use Mineur\InstagramParser\Http\HttpClient;
-use Mineur\InstagramParser\InstagramException;
+use Mineur\InstagramParser\Exception\InstagramException;
 
 /**
  * Class TagParser
@@ -51,6 +51,7 @@ class TagParser extends AbstractParser
      *
      * @param string        $tag
      * @param callable|null $callback
+     * @return mixed|void
      */
     public function parse(
         string $tag,
@@ -60,7 +61,7 @@ class TagParser extends AbstractParser
         $hasNextPage     = true;
         $itemsPerRequest = 10;
         $queryId         = $this->ensureQueryIdIsNotEmpty($this->queryId);
-        $this->ensureHasATagToParse($tag);
+        $this->ensureHasSomethingToParse($tag);
         
         while (true === $hasNextPage) {
             $endpoint = sprintf(
@@ -97,7 +98,11 @@ class TagParser extends AbstractParser
     {
         $response = $this
             ->httpClient
-            ->get($endpoint);
+            ->get(
+                $endpoint,
+                []
+            )
+        ;
         
         $parsedResponse = json_decode((string) $response, true);
         if ($parsedResponse['status'] !== 'ok') {
@@ -134,7 +139,7 @@ class TagParser extends AbstractParser
      * @param string $tag
      * @throws EmptyRequiredParamException
      */
-    private function ensureHasATagToParse(string $tag)
+    private function ensureHasSomethingToParse(string $tag)
     {
         if (empty($tag)) {
             throw new EmptyRequiredParamException(

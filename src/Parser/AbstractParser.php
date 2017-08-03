@@ -20,6 +20,11 @@ use Mineur\InstagramParser\Model\InstagramPost;
  */
 abstract class AbstractParser
 {
+    /**
+     * @param string   $parsedItem
+     * @param callable $callback
+     * @return mixed
+     */
     abstract public function parse(
         string $parsedItem,
         callable $callback

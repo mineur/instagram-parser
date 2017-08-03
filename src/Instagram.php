@@ -12,6 +12,7 @@
 namespace Mineur\InstagramParser;
 
 use Mineur\InstagramParser\Http\GuzzleHttpClient;
+use Mineur\InstagramParser\Parser\LocationParser;
 use Mineur\InstagramParser\Parser\TagParser;
 use Mineur\InstagramParser\Parser\UserMediaParser;
 use Mineur\InstagramParser\Parser\UserParser;
@@ -33,6 +34,20 @@ class Instagram
     public static function createTagParser(string $queryId)
     {
         return new TagParser(
+            new GuzzleHttpClient(),
+            $queryId
+        );
+    }
+    
+    /**
+     * Instagram Location parser
+     *
+     * @param string $queryId
+     * @return LocationParser
+     */
+    public static function createLocationParser(string $queryId)
+    {
+        return new LocationParser(
             new GuzzleHttpClient(),
             $queryId
         );
