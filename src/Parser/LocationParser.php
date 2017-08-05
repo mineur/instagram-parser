@@ -10,7 +10,7 @@ use Mineur\InstagramParser\Exception\InstagramException;
 class LocationParser extends AbstractParser
 {
     /** Resource endpoint */
-    const ENDPOINT = '/graphql/query/';
+    const ENDPOINT = '/graphql/query/?query_id=%s&id=%s&first=%d&after=%s';
     
     /** @var HttpClient */
     private $httpClient;
@@ -44,21 +44,15 @@ class LocationParser extends AbstractParser
         $this->ensureHasSomethingToParse($locationId);
         
         while (true === $hasNextPage) {
-            $options  = [
-                'query' => [
-                    'query_id' => $queryId,
-                    'variables' => [
-                        'id'    => $locationId,
-                        'first' => $itemsPerRequest,
-                        'after' => $cursor ?? ''
-                    ]
-                ]
-            ];
-            
-            $response    = $this->makeRequest(
+            $endpoint = sprintf(
                 self::ENDPOINT,
-                $options
+                $queryId,
+                $locationId,
+                $itemsPerRequest,
+                $cursor ?? ''
             );
+            
+            $response    = $this->makeRequest($endpoint, []);
             $cursor      = $response['page_info']['end_cursor'];
             $hasNextPage = $response['page_info']['has_next_page'];
             
