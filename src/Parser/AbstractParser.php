@@ -63,7 +63,7 @@ abstract class AbstractParser
     {
         if (empty($tag)) {
             throw new EmptyRequiredParamException(
-                'You must parse for one tag.'
+                'Your parser query cannot be an empty string.'
             );
         }
     }
