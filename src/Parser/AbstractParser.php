@@ -56,12 +56,12 @@ abstract class AbstractParser
     /**
      * Ensure there is something to parse
      *
-     * @param string $tag
+     * @param string $itemToParse
      * @throws EmptyRequiredParamException
      */
-    protected function ensureParserIsNotEmpty(string $tag)
+    protected function ensureParserIsNotEmpty(string $itemToParse)
     {
-        if (empty($tag)) {
+        if (empty($itemToParse)) {
             throw new EmptyRequiredParamException(
                 'Your parser query cannot be an empty string.'
             );

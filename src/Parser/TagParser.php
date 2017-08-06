@@ -98,10 +98,7 @@ class TagParser extends AbstractParser
     {
         $response = $this
             ->httpClient
-            ->get(
-                $endpoint,
-                []
-            )
+            ->get($endpoint, [])
         ;
         
         $parsedResponse = json_decode((string) $response, true);

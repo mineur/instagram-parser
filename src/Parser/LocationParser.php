@@ -18,7 +18,7 @@ use Mineur\InstagramParser\Model\QueryId;
 class LocationParser extends AbstractParser
 {
     /** Resource endpoint */
-    const ENDPOINT = '/graphql/query/?query_id=%s&id=%s&first=%d&after=%s';
+    const ENDPOINT = '/graphql/query/';
     
     /** @var HttpClient */
     private $httpClient;
@@ -50,17 +50,19 @@ class LocationParser extends AbstractParser
         
         $hasNextPage     = true;
         $itemsPerRequest = 12;
+        $cursor          = '1574109516080267643';
         
         while (true === $hasNextPage) {
-            $endpoint = sprintf(
-                self::ENDPOINT,
-                $this->queryId,
-                $locationId,
-                $itemsPerRequest,
-                $cursor ?? ''
-            );
+            $endpoint = self::ENDPOINT .
+                 '?query_id=' . $this->queryId->__toString() .
+                 '&variables=' .
+                     '%7B%22id%22%3A%22' . $locationId .
+                     '%22%2C%22first%22%3A' . $itemsPerRequest .
+                     '%2C%22after%22%3A%22' . $cursor .
+                 '%22%7D'
+            ;
             
-            $response    = $this->makeRequest($endpoint, []);
+            $response = $this->makeRequest($endpoint, []);
             $cursor      = $response['page_info']['end_cursor'];
             $hasNextPage = $response['page_info']['has_next_page'];
             
@@ -86,7 +88,7 @@ class LocationParser extends AbstractParser
     private function makeRequest(
         string $endpoint,
         array $options
-    ): array
+    ) : array
     {
         $response = $this
             ->httpClient
@@ -102,6 +104,6 @@ class LocationParser extends AbstractParser
             );
         }
         
-        return $parsedResponse['data']['hashtag']['edge_hashtag_to_media'];
+        return $parsedResponse['data']['location']['edge_location_to_media'];
     }
 }
