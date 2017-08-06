@@ -50,19 +50,20 @@ class LocationParser extends AbstractParser
         
         $hasNextPage     = true;
         $itemsPerRequest = 12;
-        $cursor          = '1574109516080267643';
+        $cursor          = '';
         
         while (true === $hasNextPage) {
-            $endpoint = self::ENDPOINT .
-                 '?query_id=' . $this->queryId->__toString() .
-                 '&variables=' .
-                     '%7B%22id%22%3A%22' . $locationId .
-                     '%22%2C%22first%22%3A' . $itemsPerRequest .
-                     '%2C%22after%22%3A%22' . $cursor .
-                 '%22%7D'
-            ;
+            $response = $this->makeRequest(self::ENDPOINT, [
+                'query' => [
+                    'query_id' => $this->queryId->__toString(),
+                    'variables' => json_encode([
+                        'id' => $locationId,
+                        'first' => $itemsPerRequest,
+                        'after' => $cursor
+                    ])
+                ]
+            ]);
             
-            $response = $this->makeRequest($endpoint, []);
             $cursor      = $response['page_info']['end_cursor'];
             $hasNextPage = $response['page_info']['has_next_page'];
             

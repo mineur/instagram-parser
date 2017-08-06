@@ -22,9 +22,6 @@ use Mineur\InstagramParser\Model\QueryId;
  */
 class UserMediaParser extends AbstractParser
 {
-    /** Resource endpoint */
-    const ENDPOINT = '/graphql/query/?query_id=%s&id=%s&first=%d&after=%s';
-    
     /** @var HttpClient */
     private $httpClient;
     
@@ -55,17 +52,19 @@ class UserMediaParser extends AbstractParser
         
         $hasNextPage = true;
         $itemsPerRequest = 10;
+        $cursor = '';
         
         while (true === $hasNextPage) {
-            $endpoint = sprintf(
-                self::ENDPOINT,
-                $this->queryId,
-                $userId,
-                $itemsPerRequest,
-                $cursor ?? ''
-            );
-            
-            $response    = $this->makeRequest($endpoint);
+            $response = $this->makeRequest(self::ENDPOINT, [
+                'query' => [
+                    'query_id' => $this->queryId->__toString(),
+                    'variables' => json_encode([
+                        'id' => $userId,
+                        'first' => $itemsPerRequest,
+                        'after' => $cursor
+                    ])
+                ]
+            ]);
             $cursor      = $response['page_info']['end_cursor'];
             $hasNextPage = $response['page_info']['has_next_page'];
             
@@ -80,14 +79,21 @@ class UserMediaParser extends AbstractParser
     
     /**
      * @param string $endpoint
+     * @param array  $options
      * @return array
      * @throws InstagramException
      */
-    private function makeRequest(string $endpoint): array
+    private function makeRequest(
+        string $endpoint,
+        array $options
+    ) : array
     {
         $response = $this
             ->httpClient
-            ->get($endpoint, [])
+            ->get(
+                $endpoint,
+                $options
+            )
         ;
         
         $parsedResponse = json_decode((string) $response, true);

@@ -35,7 +35,6 @@ class GuzzleHttpClient implements HttpClient
      */
     public function get(string $endpoint, array $options): string
     {
-        dump(self::BASE_INSTAGRAM_ENDPOINT . $endpoint, $options);
         $clientResponse = $this->client->get(
             self::BASE_INSTAGRAM_ENDPOINT . $endpoint,
             $options

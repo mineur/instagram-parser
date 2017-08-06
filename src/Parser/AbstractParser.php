@@ -21,6 +21,9 @@ use Mineur\InstagramParser\Model\InstagramPost;
  */
 abstract class AbstractParser
 {
+    /** Resource endpoint */
+    const ENDPOINT = '/graphql/query/';
+    
     /**
      * @param string   $parsedItem
      * @param callable $callback
