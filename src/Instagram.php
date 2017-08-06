@@ -12,6 +12,7 @@
 namespace Mineur\InstagramParser;
 
 use Mineur\InstagramParser\Http\GuzzleHttpClient;
+use Mineur\InstagramParser\Model\QueryId;
 use Mineur\InstagramParser\Parser\LocationParser;
 use Mineur\InstagramParser\Parser\TagParser;
 use Mineur\InstagramParser\Parser\UserMediaParser;
@@ -35,7 +36,7 @@ class Instagram
     {
         return new TagParser(
             new GuzzleHttpClient(),
-            $queryId
+            new QueryId($queryId)
         );
     }
     
@@ -49,7 +50,7 @@ class Instagram
     {
         return new LocationParser(
             new GuzzleHttpClient(),
-            $queryId
+            new QueryId($queryId)
         );
     }
     

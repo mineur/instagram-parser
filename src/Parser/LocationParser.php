@@ -5,6 +5,7 @@ namespace Mineur\InstagramParser\Parser;
 use Mineur\InstagramParser\Exception\EmptyRequiredParamException;
 use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\Exception\InstagramException;
+use Mineur\InstagramParser\Model\QueryId;
 
 
 class LocationParser extends AbstractParser
@@ -21,12 +22,12 @@ class LocationParser extends AbstractParser
     /**
      * Location Parser constructor.
      *
-     * @param HttpClient $httpClient
-     * @param string     $queryId
+     * @param HttpClient     $httpClient
+     * @param QueryId $queryId
      */
     public function __construct(
         HttpClient $httpClient,
-        string $queryId
+        QueryId $queryId
     )
     {
         $this->httpClient = $httpClient;
@@ -40,13 +41,12 @@ class LocationParser extends AbstractParser
     {
         $hasNextPage     = true;
         $itemsPerRequest = 12;
-        $queryId         = $this->ensureQueryIdIsNotEmpty($this->queryId);
         $this->ensureHasSomethingToParse($locationId);
         
         while (true === $hasNextPage) {
             $endpoint = sprintf(
                 self::ENDPOINT,
-                $queryId,
+                $this->queryId,
                 $locationId,
                 $itemsPerRequest,
                 $cursor ?? ''
@@ -95,25 +95,6 @@ class LocationParser extends AbstractParser
         }
         
         return $parsedResponse['data']['hashtag']['edge_hashtag_to_media'];
-    }
-    
-    /**
-     * Ensure Instagram GraphQL query
-     * has a non empty queryId
-     *
-     * @param string $queryId
-     * @return string
-     * @throws EmptyRequiredParamException
-     */
-    private function ensureQueryIdIsNotEmpty(string $queryId)
-    {
-        if (empty($queryId)) {
-            throw new EmptyRequiredParamException(
-                'You must include a valid queryId.'
-            );
-        }
-        
-        return $queryId;
     }
     
     /**
