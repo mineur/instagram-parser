@@ -54,7 +54,7 @@ abstract class AbstractParser
     }
     
     /**
-     * Ensure there is a tag to parse
+     * Ensure there is something to parse
      *
      * @param string $tag
      * @throws EmptyRequiredParamException
