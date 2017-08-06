@@ -39,9 +39,10 @@ class LocationParser extends AbstractParser
         callable $callback
     )
     {
+        $this->ensureParserIsNotEmpty($locationId);
+        
         $hasNextPage     = true;
         $itemsPerRequest = 12;
-        $this->ensureHasSomethingToParse($locationId);
         
         while (true === $hasNextPage) {
             $endpoint = sprintf(
@@ -95,20 +96,5 @@ class LocationParser extends AbstractParser
         }
         
         return $parsedResponse['data']['hashtag']['edge_hashtag_to_media'];
-    }
-    
-    /**
-     * Ensure there is a tag to parse
-     *
-     * @param string $tag
-     * @throws EmptyRequiredParamException
-     */
-    private function ensureHasSomethingToParse(string $tag)
-    {
-        if (empty($tag)) {
-            throw new EmptyRequiredParamException(
-                'You must parse for one tag.'
-            );
-        }
     }
 }

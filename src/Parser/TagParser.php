@@ -59,9 +59,10 @@ class TagParser extends AbstractParser
         callable $callback = null
     )
     {
+        $this->ensureParserIsNotEmpty($tag);
+        
         $hasNextPage     = true;
         $itemsPerRequest = 10;
-        $this->ensureHasSomethingToParse($tag);
         
         while (true === $hasNextPage) {
             $endpoint = sprintf(
@@ -112,20 +113,5 @@ class TagParser extends AbstractParser
         }
         
         return $parsedResponse['data']['hashtag']['edge_hashtag_to_media'];
-    }
-    
-    /**
-     * Ensure there is a tag to parse
-     *
-     * @param string $tag
-     * @throws EmptyRequiredParamException
-     */
-    private function ensureHasSomethingToParse(string $tag)
-    {
-        if (empty($tag)) {
-            throw new EmptyRequiredParamException(
-                'You must parse for one tag.'
-            );
-        }
     }
 }

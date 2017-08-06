@@ -11,6 +11,7 @@
 
 namespace Mineur\InstagramParser\Parser;
 
+use Mineur\InstagramParser\Exception\EmptyRequiredParamException;
 use Mineur\InstagramParser\Model\InstagramPost;
 
 /**
@@ -50,5 +51,20 @@ abstract class AbstractParser
         }
         
         return InstagramPost::fromArray($post);
+    }
+    
+    /**
+     * Ensure there is a tag to parse
+     *
+     * @param string $tag
+     * @throws EmptyRequiredParamException
+     */
+    protected function ensureParserIsNotEmpty(string $tag)
+    {
+        if (empty($tag)) {
+            throw new EmptyRequiredParamException(
+                'You must parse for one tag.'
+            );
+        }
     }
 }

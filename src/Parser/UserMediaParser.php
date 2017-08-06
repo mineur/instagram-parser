@@ -11,9 +11,9 @@
 
 namespace Mineur\InstagramParser\Parser;
 
-use Mineur\InstagramParser\EmptyRequiredParamException;
+use Mineur\InstagramParser\Exception\InstagramException;
 use Mineur\InstagramParser\Http\HttpClient;
-use Mineur\InstagramParser\InstagramException;
+use Mineur\InstagramParser\Model\QueryId;
 
 /**
  * Class UserMediaParser
@@ -34,12 +34,12 @@ class UserMediaParser extends AbstractParser
     /**
      * InstagramParser constructor.
      *
-     * @param HttpClient $httpClient
-     * @param string     $queryId
+     * @param HttpClient     $httpClient
+     * @param QueryId $queryId
      */
     public function __construct(
         HttpClient $httpClient,
-        string $queryId
+        QueryId $queryId
     )
     {
         $this->httpClient = $httpClient;
@@ -51,15 +51,15 @@ class UserMediaParser extends AbstractParser
         callable $callback = null
     )
     {
+        $this->ensureParserIsNotEmpty($userId);
+        
         $hasNextPage = true;
-        $queryId     = $this->ensureQueryIdIsNotEmpty($this->queryId);
-        $this->ensureHasAUserIdToParse($userId);
         $itemsPerRequest = 10;
         
         while (true === $hasNextPage) {
             $endpoint = sprintf(
                 self::ENDPOINT,
-                $queryId,
+                $this->queryId,
                 $userId,
                 $itemsPerRequest,
                 $cursor ?? ''
@@ -87,8 +87,8 @@ class UserMediaParser extends AbstractParser
     {
         $response = $this
             ->httpClient
-            ->get($endpoint);
-        dump($response);
+            ->get($endpoint, [])
+        ;
         
         $parsedResponse = json_decode((string) $response, true);
         if ($parsedResponse['status'] !== 'ok') {
@@ -98,39 +98,5 @@ class UserMediaParser extends AbstractParser
         }
         
         return $parsedResponse['data']['user']['edge_owner_to_timeline_media'];
-    }
-    
-    /**
-     * Ensure Instagram GraphQL query
-     * has a non empty queryId
-     *
-     * @param string $queryId
-     * @return string
-     * @throws EmptyRequiredParamException
-     */
-    private function ensureQueryIdIsNotEmpty(string $queryId)
-    {
-        if (empty($queryId)) {
-            throw new EmptyRequiredParamException(
-                'You must include a valid queryId.'
-            );
-        }
-        
-        return $queryId;
-    }
-    
-    /**
-     * Ensure there is a tag to parse
-     *
-     * @param string $userId
-     * @throws EmptyRequiredParamException
-     */
-    private function ensureHasAUserIdToParse(string $userId)
-    {
-        if (empty($userId)) {
-            throw new EmptyRequiredParamException(
-                'You must parse for one user, by its id.'
-            );
-        }
     }
 }
