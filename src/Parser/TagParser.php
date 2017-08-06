@@ -11,9 +11,8 @@
 
 namespace Mineur\InstagramParser\Parser;
 
-use Mineur\InstagramParser\Exception\EmptyRequiredParamException;
-use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\Exception\InstagramException;
+use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\Model\QueryId;
 
 /**

@@ -74,7 +74,7 @@ class Instagram
     {
         return new UserMediaParser(
             new GuzzleHttpClient(),
-            $queryId
+            new QueryId($queryId)
         );
     }
 }

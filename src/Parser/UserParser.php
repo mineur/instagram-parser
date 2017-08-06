@@ -11,7 +11,7 @@
 
 namespace Mineur\InstagramParser\Parser;
 
-use Mineur\InstagramParser\EmptyRequiredParamException;
+use Mineur\InstagramParser\Exception\EmptyRequiredParamException;
 use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\Model\User;
 
@@ -65,7 +65,8 @@ class UserParser
     {
         $response = $this
             ->httpClient
-            ->get($endpoint);
+            ->get($endpoint, [])
+        ;
         
         return json_decode((string) $response, true);
     }

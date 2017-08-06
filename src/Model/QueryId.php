@@ -1,7 +1,15 @@
 <?php
 
-namespace Mineur\InstagramParser\Model;
+/*
+ * Mineur/instagram-parser package
+ *
+ * Feel free to contribute!
+ *
+ * @license MIT
+ * @author alexhoma <alexcm.14@gmail.com>
+ */
 
+namespace Mineur\InstagramParser\Model;
 
 use Mineur\InstagramParser\Exception\EmptyRequiredParamException;
 
