@@ -1,10 +1,11 @@
 <?php
 
-namespace Mineur\InstagramParserTest\Parser;
+namespace Mineur\InstagramParserTest;
 
 use Mineur\InstagramParser\Exception\EmptyRequiredParamException;
 use Mineur\InstagramParser\Http\GuzzleHttpClient;
 use Mineur\InstagramParser\Http\HttpClient;
+use Mineur\InstagramParser\Model\InstagramPost;
 use Mineur\InstagramParser\Model\QueryId;
 use Mineur\InstagramParser\Parser\TagParser;
 use Mineur\InstagramParserTest\TestCase\UnitTestCase;
@@ -24,12 +25,7 @@ final class TagParserTest extends UnitTestCase
         parent::setUp();
         
         $this->httpClient = $this->mock(HttpClient::class);
-        
-        $queryId = new QueryId('124341332');
-        $this->tagParser = new TagParser(
-            $this->httpClient,
-            $queryId
-        );
+        $this->tagParser = $this->mock(TagParser::class);
     }
     
     /** @test */
@@ -40,20 +36,51 @@ final class TagParserTest extends UnitTestCase
         $emptyOptions = [];
         $emptyTagsResponse = '';
         $this->shouldReturnTagsResponse($emptyOptions, $emptyTagsResponse);
-
-        $this->tagParser->parse('', function() {});
+        
+        $tagParser = new TagParser(
+            $this->httpClient,
+            new QueryId('12342341')
+        );
+        $tagParser->parse('', function($post) {
+            return $post;
+        });
+    }
+    
+    /** @test */
+    public function it_should_return_tag_response_when_parser_has_the_correct_params()
+    {
+        $this->shouldReturnTagsResponse([], '');
+        $this->createTagParser([]);
+        
+        $this->assertEquals(
+            [],
+            $this->tagParser->parse('dd', function($post) {
+                return $post;
+            })
+        );
+    }
+    
+    public function createTagParser($post)
+    {
+        $this->tagParser
+            ->shouldReceive([
+                'parse' => null
+            ])
+            ->once()
+            ->andReturn($post)
+        ;
     }
     
     public function shouldReturnTagsResponse(
         array $requestOptions,
-        string $tagsResponse
+        string $expectedReturn
     )
     {
         $this->httpClient
             ->shouldReceive('get')
             ->with('/graphql/query/', $requestOptions)
             ->once()
-            ->andReturn($tagsResponse)
+            ->andReturn($expectedReturn)
         ;
     }
 }
