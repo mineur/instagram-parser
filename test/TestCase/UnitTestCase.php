@@ -9,7 +9,7 @@
  * @author alexhoma <alexcm.14@gmail.com>
  */
 
-namespace Mineur\TwitterStreamApiTest\TestCase;
+namespace Mineur\InstagramParserTest\TestCase;
 
 use Mockery;
 use Mockery\MockInterface;
