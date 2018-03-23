@@ -31,7 +31,7 @@ Instagram::createTagParser($queryHash)
     });
 ```
 ### The console dump will be like this:
-![](http://thumbs.gfycat.com/SpiritedAlarmedCopepod-size_restricted.gif)
+![](docs/img/example.gif)
 
 
 ## Motivation
