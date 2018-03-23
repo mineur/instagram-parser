@@ -13,12 +13,12 @@ namespace Mineur\InstagramParser\Model;
 
 use Mineur\InstagramParser\Exception\EmptyRequiredParamException;
 
-class QueryId
+class QueryHash
 {
     private $id;
     
     /**
-     * QueryId constructor.
+     * QueryHash constructor.
      *
      * @param string $id
      */
@@ -39,7 +39,7 @@ class QueryId
     
     /**
      * Ensure Instagram GraphQL query
-     * has a non empty queryId
+     * has a non empty queryHash
      *
      * @param string $id
      * @return string
@@ -49,7 +49,7 @@ class QueryId
     {
         if (empty($id)) {
             throw new EmptyRequiredParamException(
-                'You must include a valid queryId.'
+                'You must include a valid queryHash.'
             );
         }
     }

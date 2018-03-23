@@ -6,7 +6,7 @@ use Mineur\InstagramParser\Exception\EmptyRequiredParamException;
 use Mineur\InstagramParser\Http\GuzzleHttpClient;
 use Mineur\InstagramParser\Http\HttpClient;
 use Mineur\InstagramParser\Model\InstagramPost;
-use Mineur\InstagramParser\Model\QueryId;
+use Mineur\InstagramParser\Model\QueryHash;
 use Mineur\InstagramParser\Parser\TagParser;
 use Mineur\InstagramParserTest\TestCase\UnitTestCase;
 use Mockery\MockInterface;
@@ -39,7 +39,7 @@ final class TagParserTest extends UnitTestCase
         
         $tagParser = new TagParser(
             $this->httpClient,
-            new QueryId('12342341')
+            new QueryHash('12342341')
         );
         $tagParser->parse('', function($post) {
             return $post;

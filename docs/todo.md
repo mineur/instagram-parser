@@ -6,4 +6,4 @@ property named `tag`.
 - Tags Streaming parser.
 - Parse multiple tags at once.
 - Test it using phpunit.
-- Geolocation parser and Geolocation streaming parser.
+- Geolocation streaming parser.

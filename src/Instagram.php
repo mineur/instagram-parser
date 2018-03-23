@@ -12,7 +12,7 @@
 namespace Mineur\InstagramParser;
 
 use Mineur\InstagramParser\Http\GuzzleHttpClient;
-use Mineur\InstagramParser\Model\QueryId;
+use Mineur\InstagramParser\Model\QueryHash;
 use Mineur\InstagramParser\Parser\LocationParser;
 use Mineur\InstagramParser\Parser\TagParser;
 use Mineur\InstagramParser\Parser\UserMediaParser;
@@ -29,28 +29,28 @@ class Instagram
     /**
      * Instagram Tags parser
      *
-     * @param string $queryId
+     * @param string $queryHash
      * @return TagParser
      */
-    public static function createTagParser(string $queryId)
+    public static function createTagParser(string $queryHash)
     {
         return new TagParser(
             new GuzzleHttpClient(),
-            new QueryId($queryId)
+            new QueryHash($queryHash)
         );
     }
     
     /**
      * Instagram Location parser
      *
-     * @param string $queryId
+     * @param string $queryHash
      * @return LocationParser
      */
-    public static function createLocationParser(string $queryId)
+    public static function createLocationParser(string $queryHash)
     {
         return new LocationParser(
             new GuzzleHttpClient(),
-            new QueryId($queryId)
+            new QueryHash($queryHash)
         );
     }
     
@@ -67,14 +67,14 @@ class Instagram
     }
     
     /**
-     * @param string $queryId
+     * @param string $queryHash
      * @return UserMediaParser
      */
-    public static function createUserMediaParser(string $queryId)
+    public static function createUserMediaParser(string $queryHash)
     {
         return new UserMediaParser(
             new GuzzleHttpClient(),
-            new QueryId($queryId)
+            new QueryHash($queryHash)
         );
     }
 }
