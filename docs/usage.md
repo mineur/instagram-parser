@@ -5,14 +5,14 @@ Here I'll show you all possible usage of the Instagram Parser library.
 
 ## Tags Parser
 This method will give you all the posts related to the passed tag.
-Is mandatory to pass the `queryId` because this endpoint uses the Facebook's 
+Is mandatory to pass the `queryHash` because this endpoint uses the Facebook's 
 GraphQL.
 ```php
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\InstagramPost;
 
-$queryId = '17882293912014529';
-Instagram::createTagParser($queryId)
+$queryHash = '17882293912014529';
+Instagram::createTagParser($queryHash)
     ->parse('sun', function(InstagramPost $post) {
         dump($post);
     });
@@ -33,27 +33,29 @@ Then you will only have to access it by is getters. Like so:
 
 ## User Media Parser
 This method will give you all the posts related to a user.
-Is mandatory to pass the `queryId`.
+Is mandatory to pass the `queryHash`.
 ```php
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\InstagramPost;
 
-$queryId = '17882293912014529';
+$queryHash = '17882293912014529';
 $userId = '2014529';
-Instagram::createUserMediaParser($queryId)
+Instagram::createUserMediaParser($queryHash)
     ->parse($userId, function(InstagramPost $post) {
         dump($post);
     });
 ```
 
 ## User Parser
-This will give you the user info. In this case you don't need any `queryId`.
+This will give you the user info. In this case you don't need any `queryHash`.
 ```php
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\User;
 
-Instagram::createUserParser()
-    ->parse('github', function(User $user) {
-        echo $user->getFullName();
-    });
+$userParser = Instagram::createUserParser();
+
+/** @var User $user */
+$user = $userParser->parse('apisearch');
+
+echo $user->getFullName();
 ```

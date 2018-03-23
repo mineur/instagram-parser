@@ -52,8 +52,8 @@ class UserParser
             $username
         );
         $response = $this->makeRequest($endpoint);
-        $user     = $response['user'];
-        
+        $user     = $response['graphql']['user'];
+
         return User::fromArray($user);
     }
     

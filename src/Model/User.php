@@ -120,8 +120,8 @@ class User
             $user['username'],
             $user['full_name'],
             $user['biography'],
-            $user['follows']['count'],
-            $user['followed_by']['count'],
+            $user['edge_follow']['count'],
+            $user['edge_followed_by']['count'],
             $user['external_url'],
             $user['country_block'],
             $user['is_private'],
@@ -129,7 +129,7 @@ class User
             $user['profile_pic_url'],
             $user['profile_pic_url_hd'],
             $user['connected_fb_page'],
-            $user['media']['nodes']
+            $user['edge_owner_to_timeline_media']
         );
     }
     
@@ -141,20 +141,20 @@ class User
     public function toArray(): array
     {
         return [
-            'id'                      => $this->id,
-            'username'                => $this->username,
-            'full_name'               => $this->fullName,
-            'biography'               => $this->biography,
-            'follows'                 => $this->follows,
-            'followed_by'             => $this->followedBy,
-            'external_url'            => $this->externalUrl,
-            'country_block'           => $this->countryBlock,
-            'is_private'              => $this->isPrivate,
-            'is_verified'             => $this->isVerified,
-            'profile_pictureUrl'      => $this->profilePictureUrl,
-            'profile_picture_url_hd'  => $this->profilePictureUrlHd,
-            'connected_facebook_page' => $this->connectedFacebookPage,
-            'media'                   => $this->media
+            'id'                            => $this->id,
+            'username'                      => $this->username,
+            'full_name'                     => $this->fullName,
+            'biography'                     => $this->biography,
+            'edge_follow'                   => $this->follows,
+            'edge_followed_by'              => $this->followedBy,
+            'external_url'                  => $this->externalUrl,
+            'country_block'                 => $this->countryBlock,
+            'is_private'                    => $this->isPrivate,
+            'is_verified'                   => $this->isVerified,
+            'profile_pictureUrl'             => $this->profilePictureUrl,
+            'profile_picture_url_hd'         => $this->profilePictureUrlHd,
+            'connected_facebook_page'        => $this->connectedFacebookPage,
+            'edge_owner_to_timeline_media'   => $this->media
         ];
     }
     

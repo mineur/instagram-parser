@@ -13,7 +13,7 @@ namespace Mineur\InstagramParser\Parser;
 
 use Mineur\InstagramParser\Exception\InstagramException;
 use Mineur\InstagramParser\Http\HttpClient;
-use Mineur\InstagramParser\Model\QueryId;
+use Mineur\InstagramParser\Model\QueryHash;
 
 /**
  * Class TagParser
@@ -26,21 +26,21 @@ class TagParser extends AbstractParser
     private $httpClient;
     
     /** @var string */
-    private $queryId;
+    private $queryHash;
     
     /**
      * Tags Parser constructor.
      *
      * @param HttpClient     $httpClient
-     * @param QueryId $queryId
+     * @param QueryHash $queryHash
      */
     public function __construct(
         HttpClient $httpClient,
-        QueryId $queryId
+        QueryHash $queryHash
     )
     {
         $this->httpClient = $httpClient;
-        $this->queryId    = $queryId;
+        $this->queryHash    = $queryHash;
     }
     
     /**
@@ -64,7 +64,7 @@ class TagParser extends AbstractParser
         while (true === $hasNextPage) {
             $response    = $this->makeRequest(self::ENDPOINT, [
                 'query' => [
-                    'query_id' => $this->queryId->__toString(),
+                    'query_hash' => $this->queryHash->__toString(),
                     'variables' => json_encode([
                         'tag_name' => $tag,
                         'first' => $itemsPerRequest,

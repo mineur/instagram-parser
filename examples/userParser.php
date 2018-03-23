@@ -6,8 +6,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\User;
 
-Instagram::createUserParser()
-    ->parse('github', function(User $user) {
-        echo $user->toArray();
-    }
-);
+$userParser = Instagram::createUserParser();
+
+/** @var User $user */
+$user = $userParser->parse('apisearch');
+
+dump($user->toArray());

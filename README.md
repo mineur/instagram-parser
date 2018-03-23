@@ -23,9 +23,9 @@ loop of posts related to it until they are finished.
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\InstagramPost;
 
-$queryId = '17882293912014529';
+$queryHash = '17882293912014529';
 
-Instagram::createTagParser($queryId)
+Instagram::createTagParser($queryHash)
     ->parse('github', function(InstagramPost $post) {
         dump($post);
     });
