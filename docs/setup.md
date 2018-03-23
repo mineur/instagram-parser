@@ -32,3 +32,7 @@ to worry about this anymore.
 
 ## You're done!
 Now you can go back with your query ID: [home readme](../README.md)
+
+> Attention! Query hashes may change depending on the endpoint your
+> are fetching. For example, `userMediaParser` endpoint may need a
+> different hash than `locationParser` endpoint.
