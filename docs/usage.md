@@ -14,7 +14,7 @@ GraphQL.
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\InstagramPost;
 
-$queryHash = '17882293912014529';
+$queryHash = '298b92c8d7cad703f7565aa892ede943';
 Instagram::createTagParser($queryHash)
     ->parse('sun', function(InstagramPost $post) {
         dump($post);
@@ -41,7 +41,7 @@ Is mandatory to pass the `queryHash`.
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\InstagramPost;
 
-$queryHash = '17882293912014529';
+$queryHash = '298b92c8d7cad703f7565aa892ede943';
 $userId = '2014529';
 Instagram::createUserMediaParser($queryHash)
     ->parse($userId, function(InstagramPost $post) {

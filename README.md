@@ -23,7 +23,7 @@ loop of posts related to it until they are finished.
 use Mineur\InstagramParser\Instagram;
 use Mineur\InstagramParser\Model\InstagramPost;
 
-$queryHash = '17882293912014529';
+$queryHash = '298b92c8d7cad703f7565aa892ede943';
 
 Instagram::createTagParser($queryHash)
     ->parse('github', function(InstagramPost $post) {

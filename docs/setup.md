@@ -31,7 +31,7 @@ to worry about this anymore.
 <img src="img/query-hash.png" alt="Instagram xhr queries" width="500">
 
 ## You're done!
-Now you can go back with your query ID: [home readme](../README.md)
+Now you can go back with your query hash: [home readme](../README.md)
 
 > Attention! Query hashes may change depending on the endpoint your
 > are fetching. For example, `userMediaParser` endpoint may need a

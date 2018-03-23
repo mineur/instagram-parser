@@ -2,7 +2,7 @@
 
 - [Set up](setup.md)
     - [Installation](setup.md#installation)
-    - [How to get your query Id](setup.md#how-to-get-your-query-id)
+    - [How to get your query hash](setup.md#how-to-get-your-query-hash-old-query-id)
 - [Usage](usage.md)
     - [Get tags](usage.md#get-tags)
     - [Get user media](usage.md#get-user-media)
