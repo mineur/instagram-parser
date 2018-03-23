@@ -13,8 +13,8 @@ data. Like an API, but without being it! You can get posts by a tag, all user po
 ```shell
 composer require mineur/instagram-parser:dev-master
 ```
-Before run your parsers, you first need a **query ID**. Follow this 5 steps to 
-get yours: [How to get a query ID](/docs/setup.md#how-to-get-your-query-id).
+Before run your parsers, you first need a **query hash**. Follow this 5 steps to 
+get yours: [How to get a query hash](/docs/setup.md#how-to-get-your-query-hash-old-query-id).
 
 ## Start parsing!
 Let's parse all data tagged with the string "github" for instance. You will get a scaled infinite 
